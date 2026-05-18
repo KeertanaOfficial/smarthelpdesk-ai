@@ -1,0 +1,177 @@
+[
+  {
+    "id": "it_001",
+    "domain": "it",
+    "category": "Password",
+    "question": "How do I reset my password?",
+    "answer": "Visit passwordreset.company.com and sign in with your corporate email. Verify your identity using MFA and create a new password with at least 12 characters, including uppercase letters, lowercase letters, numbers, and special characters. New passwords cannot match the previous 5 passwords."
+  },
+  {
+    "id": "it_002",
+    "domain": "it",
+    "category": "Password",
+    "question": "How often do I need to change my password?",
+    "answer": "Passwords expire every 90 days. Employees receive reminder emails 14, 7, and 1 day before expiration. If a password expires, users must reset it during the next login attempt."
+  },
+  {
+    "id": "it_003",
+    "domain": "it",
+    "category": "Account Access",
+    "question": "What should I do if my account gets locked?",
+    "answer": "Accounts are automatically locked after 5 failed login attempts. Wait 15 minutes for automatic unlock or contact the IT Help Desk for manual assistance."
+  },
+  {
+    "id": "it_004",
+    "domain": "it",
+    "category": "VPN",
+    "question": "How do I set up VPN access?",
+    "answer": "Download Cisco AnyConnect or SecureConnect VPN from the IT Self-Service portal. Install the client, enter the VPN server address vpn.company.com, and sign in using your corporate credentials with MFA verification."
+  },
+  {
+    "id": "it_005",
+    "domain": "it",
+    "category": "VPN",
+    "question": "Why is my VPN not connecting?",
+    "answer": "Verify internet connectivity, confirm the VPN server address, ensure your MFA code is valid, restart the VPN client, and disable any conflicting VPN software. If issues continue, restart your device or contact IT Support."
+  },
+  {
+    "id": "it_006",
+    "domain": "it",
+    "category": "VPN",
+    "question": "Can I use the VPN while traveling internationally?",
+    "answer": "Yes. Employees traveling outside the country must notify IT Security at least 48 hours before travel to enable international VPN access."
+  },
+  {
+    "id": "it_007",
+    "domain": "it",
+    "category": "MFA",
+    "question": "How do I set up Multi-Factor Authentication (MFA)?",
+    "answer": "Install Microsoft Authenticator or AuthSecure on your mobile device. Visit the MFA setup portal, sign in with corporate credentials, scan the QR code, and verify using the generated authentication code."
+  },
+  {
+    "id": "it_008",
+    "domain": "it",
+    "category": "MFA",
+    "question": "What should I do if I lose my MFA device?",
+    "answer": "Contact the IT Service Desk immediately. IT will verify your identity through secondary verification methods and assist with re-registering MFA on your new device."
+  },
+  {
+    "id": "it_009",
+    "domain": "it",
+    "category": "Email",
+    "question": "How do I configure company email on my mobile device?",
+    "answer": "Install the Microsoft Outlook app from the App Store or Google Play Store. Sign in with your corporate email account, complete MFA verification, and allow required device permissions."
+  },
+  {
+    "id": "it_010",
+    "domain": "it",
+    "category": "Email",
+    "question": "Why is my email account suspended?",
+    "answer": "Email accounts may be suspended due to password expiration, repeated failed MFA attempts, compliance violations, or extended inactivity. Reset your password first, then contact IT if the issue continues."
+  },
+  {
+    "id": "it_011",
+    "domain": "it",
+    "category": "Software",
+    "question": "How do I request software installation?",
+    "answer": "Open the IT Self-Service portal and submit a software request with the application name, business justification, and manager approval if required. Approved software is usually installed within 2–3 business days."
+  },
+  {
+    "id": "it_012",
+    "domain": "it",
+    "category": "Software",
+    "question": "Which software applications are pre-approved?",
+    "answer": "Pre-approved software includes Microsoft Office 365, Visual Studio Code, Slack, Zoom, Adobe Reader, Docker Desktop, and approved browser extensions."
+  },
+  {
+    "id": "it_013",
+    "domain": "it",
+    "category": "Software",
+    "question": "How do I install Microsoft Office 365?",
+    "answer": "Office 365 is pre-installed on most corporate laptops. To reinstall, visit office.com, sign in with your corporate account, and click 'Install Office'. Activation occurs automatically after sign-in."
+  },
+  {
+    "id": "it_014",
+    "domain": "it",
+    "category": "Software",
+    "question": "Can I install personal software on company devices?",
+    "answer": "No. Personal, pirated, or unapproved software is prohibited on company-managed devices for security and compliance reasons."
+  },
+  {
+    "id": "it_015",
+    "domain": "it",
+    "category": "Hardware",
+    "question": "How do I request a new laptop?",
+    "answer": "Submit a Hardware Request ticket through the IT Self-Service portal. Standard laptop refresh cycles occur every 3 years and require manager approval."
+  },
+  {
+    "id": "it_016",
+    "domain": "it",
+    "category": "Hardware",
+    "question": "What should I do if my laptop screen is flickering?",
+    "answer": "Update display drivers, restart the device, adjust the refresh rate, and test using an external monitor. If the issue persists, submit a hardware support ticket."
+  },
+  {
+    "id": "it_017",
+    "domain": "it",
+    "category": "Hardware",
+    "question": "What should I do if my laptop is stolen?",
+    "answer": "Immediately notify IT Security and your manager. IT will remotely lock or wipe the device and assist with replacement procedures."
+  },
+  {
+    "id": "it_018",
+    "domain": "it",
+    "category": "Hardware",
+    "question": "How often should I update my laptop?",
+    "answer": "System and security updates are automatically deployed every Friday evening. Employees should restart their devices weekly to complete installation."
+  },
+  {
+    "id": "it_019",
+    "domain": "it",
+    "category": "Access",
+    "question": "How do I request access to a shared drive or SharePoint site?",
+    "answer": "Submit an access request through the IT portal or use the 'Request Access' option within SharePoint. Manager or site-owner approval may be required."
+  },
+  {
+    "id": "it_020",
+    "domain": "it",
+    "category": "Network",
+    "question": "How do I connect to the corporate Wi-Fi?",
+    "answer": "Select the 'CorpNet' wireless network, enter your corporate username and password, and accept the security certificate if prompted."
+  },
+  {
+    "id": "it_021",
+    "domain": "it",
+    "category": "Network",
+    "question": "How do I access guest Wi-Fi?",
+    "answer": "Guests can connect to the 'CorpGuest' network using temporary credentials provided by reception or the meeting organizer. Guest access expires after 24 hours."
+  },
+  {
+    "id": "it_022",
+    "domain": "it",
+    "category": "Security",
+    "question": "What should I do if I receive a suspicious email?",
+    "answer": "Do not click any links or attachments. Use the 'Report Phishing' button in Outlook to notify the Security team, then delete the email. If you already interacted with the email, reset your password immediately and contact IT Security."
+  },
+  {
+    "id": "it_023",
+    "domain": "it",
+    "category": "Security",
+    "question": "What are the company password requirements?",
+    "answer": "Passwords must contain at least 12 characters and include uppercase letters, lowercase letters, numbers, and special characters. Password reuse is prohibited."
+  },
+  {
+    "id": "it_024",
+    "domain": "it",
+    "category": "Support",
+    "question": "How do I raise an IT support ticket?",
+    "answer": "Use the IT Service Portal and select either 'Incident' for outages or technical issues, or 'Service Request' for software, hardware, and access requests."
+  },
+  {
+    "id": "it_025",
+    "domain": "it",
+    "category": "Support",
+    "question": "What are the IT support hours?",
+    "answer": "Standard IT support is available Monday through Friday from 7:00 AM to 7:00 PM Pacific Time. Critical production issues are supported 24/7."
+  }
+]

@@ -1,0 +1,47 @@
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+*.so
+.Python
+*.egg-info/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+
+# Virtual envs
+.venv/
+venv/
+env/
+ENV/
+
+# Environment / secrets
+.env
+.env.*
+!.env.example
+
+# Local DB / runtime state
+data/chroma/
+data/langgraph_checkpoints.db
+data/app.db
+data/sessions.db
+data/eval_results/
+*.db
+*.sqlite
+*.sqlite3
+
+# OS / editor
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+
+# Terraform / AWS later
+.terraform/
+*.tfstate
+*.tfstate.*
+*.tfvars

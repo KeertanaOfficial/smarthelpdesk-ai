@@ -1,0 +1,240 @@
+[
+  {
+    "id": "hr_001",
+    "domain": "hr",
+    "category": "Leave",
+    "question": "How many paid leave days do employees get per year?",
+    "answer": "All full-time employees are entitled to 20 paid leave days per calendar year. Leave accrues at 1.67 days per month. Unused leave up to 5 days can be carried over to the next year."
+  },
+  {
+    "id": "hr_002",
+    "domain": "hr",
+    "category": "Leave",
+    "question": "How many sick leave days are available annually?",
+    "answer": "Full-time employees receive 10 paid sick leave days per calendar year. Sick leave can be applied through the HR portal under 'Leave Requests'."
+  },
+  {
+    "id": "hr_003",
+    "domain": "hr",
+    "category": "Leave",
+    "question": "How do I apply for sick leave?",
+    "answer": "Sick leave can be applied through the HR portal under 'Leave Requests'. For absences longer than 2 consecutive days, a medical certificate must be uploaded."
+  },
+  {
+    "id": "hr_004",
+    "domain": "hr",
+    "category": "Leave",
+    "question": "What is the maternity leave policy?",
+    "answer": "Eligible employees receive 26 weeks of paid maternity leave. Employees must notify HR at least 8 weeks in advance and submit the maternity leave form along with required medical documentation."
+  },
+  {
+    "id": "hr_005",
+    "domain": "hr",
+    "category": "Leave",
+    "question": "What is the paternity leave policy?",
+    "answer": "New fathers are entitled to 4 weeks of paid paternity leave, which must be taken within 6 months of the child's birth or adoption."
+  },
+  {
+    "id": "hr_006",
+    "domain": "hr",
+    "category": "Leave",
+    "question": "What is the parental leave policy?",
+    "answer": "Eligible employees receive 16 weeks paid parental leave for primary caregivers and 8 weeks for secondary caregivers."
+  },
+  {
+    "id": "hr_007",
+    "domain": "hr",
+    "category": "Payroll",
+    "question": "When is salary credited each month?",
+    "answer": "Salaries are credited on the last working day of each month. If the last day falls on a weekend or holiday, payment is processed on the previous business day."
+  },
+  {
+    "id": "hr_008",
+    "domain": "hr",
+    "category": "Payroll",
+    "question": "How do I download my payslip?",
+    "answer": "Payslips are available on the HR portal under 'My Documents > Payslips'. You can download them in PDF format. Payslips for the current month are available by the 3rd of the following month."
+  },
+  {
+    "id": "hr_009",
+    "domain": "hr",
+    "category": "Payroll",
+    "question": "How do I submit tax declarations?",
+    "answer": "Employees must submit tax declarations before January 31 each year through the Payroll System."
+  },
+  {
+    "id": "hr_010",
+    "domain": "hr",
+    "category": "Payroll",
+    "question": "What happens if I miss the tax declaration deadline?",
+    "answer": "Payroll taxes will be deducted at the default maximum withholding rate until declarations are updated."
+  },
+  {
+    "id": "hr_011",
+    "domain": "hr",
+    "category": "Payroll",
+    "question": "What is included in the salary structure?",
+    "answer": "The salary structure may include base salary, performance bonus, retirement contributions, health benefits, and equity grants."
+  },
+  {
+    "id": "hr_012",
+    "domain": "hr",
+    "category": "Payroll",
+    "question": "How does stock-option vesting work?",
+    "answer": "Stock options vest over 4 years with a 1-year cliff and monthly vesting thereafter."
+  },
+  {
+    "id": "hr_013",
+    "domain": "hr",
+    "category": "Payroll",
+    "question": "Can employees choose direct deposit accounts?",
+    "answer": "Yes. Employees may maintain up to 2 bank accounts for salary deposits."
+  },
+  {
+    "id": "hr_014",
+    "domain": "hr",
+    "category": "Payroll",
+    "question": "How do I update bank account information?",
+    "answer": "Update bank details through the Payroll Portal at least 7 business days before payday."
+  },
+  {
+    "id": "hr_015",
+    "domain": "hr",
+    "category": "Reimbursement",
+    "question": "How do I submit a reimbursement claim?",
+    "answer": "Submit reimbursement claims through the Expense Portal. Upload receipts, select the expense category, and submit for manager approval. Claims must be submitted within 30 days of the expense date."
+  },
+  {
+    "id": "hr_016",
+    "domain": "hr",
+    "category": "Reimbursement",
+    "question": "What expenses are eligible for reimbursement?",
+    "answer": "Eligible expenses include business travel, client meals, internet bills (up to $75/month for remote employees), professional development courses (pre-approved), and home office equipment (up to $500/year)."
+  },
+  {
+    "id": "hr_017",
+    "domain": "hr",
+    "category": "Benefits",
+    "question": "What health insurance benefits are provided?",
+    "answer": "All full-time employees receive comprehensive health insurance covering self, spouse, and up to 2 children. Coverage includes hospitalization up to $500,000, dental, vision, and mental health support."
+  },
+  {
+    "id": "hr_018",
+    "domain": "hr",
+    "category": "Benefits",
+    "question": "What is the 401(k) matching policy?",
+    "answer": "The company matches 100% of employee contributions up to 6% of base salary. Vesting is immediate. Employees can change contribution amounts quarterly through the Benefits portal."
+  },
+  {
+    "id": "hr_019",
+    "domain": "hr",
+    "category": "WorkFromHome",
+    "question": "What is the work-from-home policy?",
+    "answer": "Employees can work from home up to 3 days per week, subject to manager approval. Fully remote arrangements require senior leadership approval and a formal remote work agreement."
+  },
+  {
+    "id": "hr_020",
+    "domain": "hr",
+    "category": "WorkFromHome",
+    "question": "Are employees allowed to work from another state?",
+    "answer": "Yes, but only from approved payroll-supported states. Employees must inform HR before relocating."
+  },
+  {
+    "id": "hr_021",
+    "domain": "hr",
+    "category": "Onboarding",
+    "question": "What documents are needed for onboarding?",
+    "answer": "New hires must submit government-issued ID, proof of address, education certificates, previous employment relieving letter, bank account details, tax forms, and signed offer letter."
+  },
+  {
+    "id": "hr_022",
+    "domain": "hr",
+    "category": "Onboarding",
+    "question": "What should I do on my first day?",
+    "answer": "Complete identity verification, HR orientation, security awareness training, laptop setup, and a manager introduction meeting."
+  },
+  {
+    "id": "hr_023",
+    "domain": "hr",
+    "category": "Onboarding",
+    "question": "When will I receive my laptop?",
+    "answer": "Employees typically receive devices on their first office day or 2 business days before remote joining."
+  },
+  {
+    "id": "hr_024",
+    "domain": "hr",
+    "category": "Onboarding",
+    "question": "How do I activate my employee ID badge?",
+    "answer": "Visit Facilities with a government-issued ID after completing onboarding paperwork."
+  },
+  {
+    "id": "hr_025",
+    "domain": "hr",
+    "category": "Onboarding",
+    "question": "What is the probation period?",
+    "answer": "New employees are on probation for the first 6 months of employment."
+  },
+  {
+    "id": "hr_026",
+    "domain": "hr",
+    "category": "Onboarding",
+    "question": "Is there a buddy programme for new employees?",
+    "answer": "Yes. Every new employee is assigned a peer buddy for the first 90 days."
+  },
+  {
+    "id": "hr_027",
+    "domain": "hr",
+    "category": "Conduct",
+    "question": "What is the dress code policy?",
+    "answer": "The company follows a smart casual dress code. Business formal is required for client meetings and external presentations. Fridays are casual dress days."
+  },
+  {
+    "id": "hr_028",
+    "domain": "hr",
+    "category": "Conduct",
+    "question": "What is the company code of conduct?",
+    "answer": "Employees are expected to maintain professionalism, respect confidentiality, avoid conflicts of interest, and follow workplace ethics policies."
+  },
+  {
+    "id": "hr_029",
+    "domain": "hr",
+    "category": "Conduct",
+    "question": "How do I report workplace harassment?",
+    "answer": "Workplace harassment can be reported through HR email, the anonymous Ethics Hotline, or the secure online reporting form on the HR portal. All reports are confidential."
+  },
+  {
+    "id": "hr_030",
+    "domain": "hr",
+    "category": "Conduct",
+    "question": "What is the anti-harassment policy?",
+    "answer": "The company maintains zero tolerance for harassment, discrimination, or retaliation."
+  },
+  {
+    "id": "hr_031",
+    "domain": "hr",
+    "category": "Performance",
+    "question": "How does the annual performance review work?",
+    "answer": "Performance reviews are conducted annually in March and include self-assessment, manager evaluation, peer feedback, goal setting, and calibration discussions."
+  },
+  {
+    "id": "hr_032",
+    "domain": "hr",
+    "category": "Performance",
+    "question": "How are bonuses calculated?",
+    "answer": "Performance bonuses are based on company performance, team goals, and individual ratings."
+  },
+  {
+    "id": "hr_033",
+    "domain": "hr",
+    "category": "Career",
+    "question": "How do I apply for internal job transfers?",
+    "answer": "Employees may apply internally after completing 12 months in their current role and meeting performance expectations."
+  },
+  {
+    "id": "hr_034",
+    "domain": "hr",
+    "category": "Holidays",
+    "question": "What holidays are company-wide holidays?",
+    "answer": "The company observes New Year’s Day, Memorial Day, Independence Day, Labor Day, Thanksgiving, and Christmas Day."
+  }
+]
