@@ -6,9 +6,8 @@ LangGraph workflow with:
 """
 
 from pathlib import Path
-from langgraph.graph import StateGraph, END, START
-from langgraph.checkpoint.sqlite import SqliteSaver
-from langgraph.types import interrupt, Command
+from langgraph.graph import StateGraph, END
+from langgraph.types import interrupt
 
 from app.models.state import AgentState
 from app.agents.router import router_agent
@@ -16,7 +15,6 @@ from app.agents.hr_agent import hr_agent
 from app.agents.it_agent import it_agent
 from app.agents.ticket_create_agent import ticket_create_agent
 from app.agents.ticket_status_agent import ticket_status_agent
-from app.models.state import RetrievedChunk  # noqa: F401
 
 # Guardrails
 from app.guardrails.input_validator import validate_input
@@ -30,14 +28,6 @@ from app.guardrails.pii_redactor import extract_email
 # ============================================================
 CHECKPOINT_DB = Path("data/langgraph_checkpoints.db")
 CHECKPOINT_DB.parent.mkdir(parents=True, exist_ok=True)
-
-
-def _get_checkpointer():
-    """Lazy-load SQLite checkpointer."""
-    import sqlite3
-    conn = sqlite3.connect(str(CHECKPOINT_DB), check_same_thread=False)
-    return SqliteSaver(conn)
-
 
 # ============================================================
 # Guardrail nodes
@@ -273,11 +263,4 @@ def build_graph(use_checkpointer: bool = False):
 
     graph.add_edge("ticket_status", "output_guard")
     graph.add_edge("output_guard", END)
-
-    if use_checkpointer:
-        checkpointer = _get_checkpointer()
-        return graph.compile(
-            checkpointer=checkpointer,
-            interrupt_before=["human_confirmation"],
-        )
     return graph.compile()

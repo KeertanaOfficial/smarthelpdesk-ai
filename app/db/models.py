@@ -1,4 +1,4 @@
-from sqlalchemy import Column, String, Text, DateTime, Boolean, JSON
+from sqlalchemy import Column, String, Text, DateTime, JSON
 from sqlalchemy.ext.declarative import declarative_base
 import datetime
 import uuid

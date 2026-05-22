@@ -3,7 +3,7 @@ PII Detection & Redaction using Microsoft Presidio — hardened.
 """
 
 import re
-from typing import Tuple, List, Optional, Sequence
+from typing import Tuple, List, Optional
 
 
 def detect_pii(text: str) -> List[dict]:

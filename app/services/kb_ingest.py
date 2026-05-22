@@ -3,7 +3,6 @@ Production-grade batched ingestion for SmartDesk AI.
 Run: python -m app.services.kb_ingest
 """
 
-from pathlib import Path
 from langchain_openai import OpenAIEmbeddings
 from langchain_community.vectorstores import Chroma
 from langchain_core.documents import Document

@@ -74,6 +74,10 @@
 | RAM | 4GB+ |
 | Disk | 2GB free |
 
+## Extract Requeirements.txt
+```
+ pip freeze > requirements.txt
+```
 
 ## 1. Clone & Setup
 ```bash

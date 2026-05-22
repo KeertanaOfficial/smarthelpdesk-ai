@@ -10,7 +10,6 @@ Datasets:
 
 from datasets import load_dataset
 from pathlib import Path
-import pandas as pd
 
 RAW_DIR = Path("data/kb/raw")
 RAW_DIR.mkdir(parents=True, exist_ok=True)

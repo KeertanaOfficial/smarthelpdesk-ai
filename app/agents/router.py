@@ -4,7 +4,7 @@ from app.models.state import AgentState
 from app.prompts.router_prompt import ROUTER_PROMPT
 from app.services.llm_service import get_llm
 from app.services.decision_logger import log_decision
-from app.services.retrieval_service import get_vectorstore, get_embeddings
+from app.services.retrieval_service import get_vectorstore
 
 def router_agent(state: AgentState) -> AgentState:
     llm = get_llm()
