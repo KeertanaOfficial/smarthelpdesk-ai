@@ -5,74 +5,149 @@ from app.services.ticket_service import get_ticket_service
 def ticket_create_agent(state: AgentState) -> AgentState:
     ticket = state.ticket
 
-    # Auto-fill missing fields
+    # Preserve original issue text
+    # if not ticket.summary:
+    #     clean = state.user_message.strip()
+
+    #     if "@" not in clean and clean.lower() != "confirm":
+    #         ticket.summary = clean[:80]
+    #     else:
+    #         ticket.summary = "Support Request"
+
+    # if not ticket.description:
+    #     ticket.description = ticket.summary
+
+    import re
+
+    # Extract email if present
+    email_match = re.search(r'[\w\.-]+@[\w\.-]+\.\w+', state.user_message)
+
+    clean_message = state.user_message
+
+    # Remove email from sentence
+    if email_match:
+        clean_message = clean_message.replace(email_match.group(0), "")
+
+    # Remove ticket creation filler words
+    clean_message = (
+        clean_message
+        .replace("can you create a ticket for", "")
+        .replace("create a ticket for", "")
+        .replace("create ticket for", "")
+        .replace("for the email", "")
+        .replace("please", "")
+        .strip()
+    )
+
+    # Cleanup spaces
+    clean_message = " ".join(clean_message.split())
+
+    # Fallback
+    if not clean_message:
+        clean_message = "VPN Issue"
+
+    # Title / Summary
     if not ticket.summary:
-        # Take first 80 chars of message as summary
-        ticket.summary = state.user_message[:80] if state.user_message else "Support request"
+        ticket.summary = clean_message[:80]
 
+    # Description
     if not ticket.description:
-        ticket.description = state.user_message or "No description provided"
-
+        ticket.description = f"User reported issue: {clean_message}"
+        
     if not ticket.category:
-        ticket.category = state.domain.upper() if state.domain != "unknown" else "GENERAL"
+        ticket.category = "IT"
 
-    # Step 1: Need email
+    if not ticket.priority:
+        ticket.priority = "Medium"
+
+    # Reuse remembered email
     if not ticket.email:
-        state.answer = (
-            "📧 To create a ticket, I need your email address. "
-            "Please reply with your work email (e.g., yourname@company.com)."
-        )
-        # Signal UI: waiting for email
-        state.session["awaiting"] = "email"
-        return state
+        remembered_email = state.session.get("email")
 
-    # Step 2: Need confirmation
+        if remembered_email:
+            ticket.email = remembered_email
+        else:
+            state.answer = (
+                "Please provide your work email address "
+                "to create the ticket."
+            )
+
+            state.session["awaiting"] = "email"
+
+            state.session["ticket_draft"] = {
+                "summary": ticket.summary,
+                "description": ticket.description,
+                "category": ticket.category,
+                "priority": ticket.priority,
+            }
+
+            return state
+
+    # Confirmation step
     if not ticket.confirmed:
-        state.answer = (
-            "📝 **Please confirm your ticket details:**\n\n"
-            f"• **Email:** {ticket.email}\n"
-            f"• **Summary:** {ticket.summary}\n"
-            f"• **Description:** {ticket.description}\n"
-            f"• **Category:** {ticket.category}\n"
-            f"• **Priority:** {ticket.priority or 'Medium'}\n\n"
-            "Reply with **'confirm'** or click the Confirm button to create the ticket."
-        )
-        # ✅ Explicit signal for UI
+        state.answer = f"""
+Please confirm your ticket details:
+
+• Email: {ticket.email}
+• Summary: {ticket.summary}
+• Description: {ticket.description}
+• Category: {ticket.category}
+• Priority: {ticket.priority}
+
+Reply with 'confirm' to create the ticket.
+"""
+
         state.session["awaiting"] = "confirmation"
-        state.session["ticket_pending"] = True
+
+        state.session["ticket_draft"] = {
+            "email": ticket.email,
+            "summary": ticket.summary,
+            "description": ticket.description,
+            "category": ticket.category,
+            "priority": ticket.priority,
+        }
+
         return state
 
-    # Step 3: Create ticket
+    # Prevent duplicate creation
+    if state.session.get("ticket_created"):
+        state.answer = (
+            f"Ticket already created.\n\n"
+            f"Ticket ID: {state.session.get('last_ticket_id')}"
+        )
+        return state
+
+    # Create ticket
     try:
         svc = get_ticket_service()
-        
-        if not svc:
-            state.answer = "Ticket system unavailable. Please try again."
-            return state
 
         created = svc.create_ticket({
             "email": ticket.email,
             "summary": ticket.summary,
             "description": ticket.description,
             "category": ticket.category,
-            "priority": ticket.priority or "Medium",
+            "priority": ticket.priority,
         })
 
         ticket.ticket_id = created["ticket_id"]
-        ticket.ticket_url = created["ticket_url"]
 
-        state.answer = (
-            "✅ **Ticket created successfully!**\n\n"
-            f"• **Ticket ID:** `{ticket.ticket_id}`\n\n"
-            f"• **Status:** {created.get('status', 'Open')}\n\n"
-            "You can ask 'what is the status of my tickets?' anytime."
-        )
-        state.session["awaiting"] = None
-        state.session["ticket_pending"] = False
+        # Persist memory
+        state.session["email"] = ticket.email
         state.session["ticket_created"] = True
+        state.session["last_ticket_id"] = ticket.ticket_id
+        state.session["awaiting"] = None
+
+        state.answer = f"""
+✅ Ticket created successfully!
+
+• Ticket ID: {ticket.ticket_id}
+
+• Status: {created.get("status", "Open")}
+
+You can ask 'what is the status of my tickets?' anytime.
+"""
 
     except Exception as e:
-        state.answer = f"⚠️ Failed to create ticket: {str(e)}. Please try again or contact IT support."
-        state.errors.append(f"ticket_create_failed: {e}")
+        state.answer = f"Failed to create ticket: {str(e)}"
 
     return state

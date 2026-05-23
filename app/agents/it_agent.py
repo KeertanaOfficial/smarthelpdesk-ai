@@ -1,38 +1,52 @@
 from langchain_core.messages import HumanMessage, SystemMessage
+
 from app.models.state import AgentState
-from app.prompts.it_prompt import IT_PROMPT
 from app.services.llm_service import get_llm
-from app.services.retrieval_service import get_related_questions, retrieve_docs
+from app.services.retrieval_service import retrieve_docs
+
+
+IT_PROMPT = """
+You are an internal IT support assistant.
+
+Use the provided knowledge base context to answer the user question clearly and concisely.
+
+If the knowledge base does not contain the answer,
+say:
+"I could not find a matching IT knowledge base article."
+"""
+
 
 def it_agent(state: AgentState) -> AgentState:
-    state.retrieved_chunks = retrieve_docs(state.user_message, domain="it")
+    try:
+        docs = retrieve_docs(state.user_message, domain="it")
 
-    top_score = state.retrieved_chunks[0].score
-    if not state.retrieved_chunks:
-        suggestions = get_related_questions(state.user_message, "it")
-        state.answer = (
-            "I don't have an exact match for that, but here are some related topics:\n\n"
-            + "\n".join(f"- {q}" for q in suggestions)
-        )
-        state.session["suggested_questions"] = suggestions
-        # ✅ CRITICAL: do NOT escalate
-        state.needs_escalation = False
-        return state
+        state.retrieved_chunks = docs
 
-    context = "\n\n".join([
-        f"Source: {chunk.source}\nContent: {chunk.content}"
-        for chunk in state.retrieved_chunks
-    ])
+        if not docs:
+            state.answer = "I could not find a matching IT knowledge base article."
+            return state
 
-    llm = get_llm()
-    response = llm.invoke([
-        SystemMessage(content=IT_PROMPT),
-        HumanMessage(content=f"User question: {state.user_message}\n\nContext:\n{context}")
-    ])
+        context = "\n\n".join([d.content for d in docs])
 
-    state.answer = response.content
+        llm = get_llm()
 
-    if "I don’t have enough information" in state.answer:
-        state.needs_escalation = True
+        response = llm.invoke([
+            SystemMessage(content=IT_PROMPT),
+            HumanMessage(
+                content=f"""
+User Question:
+{state.user_message}
+
+Knowledge Base Context:
+{context}
+"""
+            )
+        ])
+
+        state.answer = response.content.strip()
+
+    except Exception as e:
+        state.answer = f"IT agent error: {str(e)}"
+        state.errors.append(str(e))
 
     return state

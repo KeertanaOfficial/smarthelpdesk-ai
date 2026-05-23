@@ -238,6 +238,7 @@ def build_graph(use_checkpointer: bool = False):
         "it_agent": "it_agent",
         "ticket_create": "ticket_create",
         "ticket_status": "ticket_status",
+        "output_guard": "output_guard",
     })
 
     graph.add_conditional_edges("hr_agent", route_after_specialist, {
