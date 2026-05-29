@@ -5,18 +5,6 @@ from app.services.ticket_service import get_ticket_service
 def ticket_create_agent(state: AgentState) -> AgentState:
     ticket = state.ticket
 
-    # Preserve original issue text
-    # if not ticket.summary:
-    #     clean = state.user_message.strip()
-
-    #     if "@" not in clean and clean.lower() != "confirm":
-    #         ticket.summary = clean[:80]
-    #     else:
-    #         ticket.summary = "Support Request"
-
-    # if not ticket.description:
-    #     ticket.description = ticket.summary
-
     import re
 
     # Extract email if present
@@ -48,7 +36,7 @@ def ticket_create_agent(state: AgentState) -> AgentState:
 
     # Title / Summary
     if not ticket.summary:
-        ticket.summary = clean_message[:80]
+        ticket.summary = clean_message
 
     # Description
     if not ticket.description:
@@ -88,11 +76,11 @@ def ticket_create_agent(state: AgentState) -> AgentState:
         state.answer = f"""
 Please confirm your ticket details:
 
-• Email: {ticket.email}
-• Summary: {ticket.summary}
-• Description: {ticket.description}
-• Category: {ticket.category}
-• Priority: {ticket.priority}
+• Email: {ticket.email}\n
+• Summary: {ticket.summary}\n
+• Description: {ticket.description}\n
+• Category: {ticket.category}\n
+• Priority: {ticket.priority}\n
 
 Reply with 'confirm' to create the ticket.
 """

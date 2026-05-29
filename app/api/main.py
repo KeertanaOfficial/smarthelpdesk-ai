@@ -91,7 +91,7 @@ def health():
 
     return {
         "status": "ok",
-        "service": "smartdesk-ai",
+        "service": "smarthelpdesk-ai",
     }
 
 

@@ -82,7 +82,7 @@
 ## 1. Clone & Setup
 ```bash
 git clone <your-repo-url>
-cd smartdesk-ai
+cd smarthelpdesk-ai
 ```
 
 ## Create virtual environment
@@ -348,7 +348,7 @@ When a guardrail triggers, the Streamlit UI shows:
 
 ## 📁 12.Project Structure
 ```
-smartdesk-ai/
+smarthelpdesk-ai/
 ├── app/
 │   ├── api/                # FastAPI entry point
 │   │   └── main.py
@@ -661,7 +661,7 @@ Cause: Running script from wrong directory or sys.path issue.
 
 Solution:
 Always run from project root
-cd smartdesk-ai
+cd smarthelpdesk-ai
 python scripts/run_eval.py
 ```
 ```
