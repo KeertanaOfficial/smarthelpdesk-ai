@@ -18,6 +18,7 @@ ENV/
 
 # Environment / secrets
 .env
+.env.production
 .env.*
 !.env.example
 
