@@ -1,5 +1,5 @@
 """
-Download official datasets for SmartDesk AI.
+Download official datasets for SmartHelpDesk AI.
 
 Datasets:
 - strova-ai/hr-policies-qa-dataset       (HR Q&A, 644 rows)
@@ -63,7 +63,7 @@ def download_kameron_it(subset_size: int = 500):
 
 if __name__ == "__main__":
     print("=" * 60)
-    print("🚀 Downloading SmartDesk AI Datasets")
+    print("🚀 Downloading SmartHelpDesk AI Datasets")
     print("=" * 60)
     download_strova_hr()
     download_embracecoder_hr()

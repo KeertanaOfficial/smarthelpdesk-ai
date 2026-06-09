@@ -21,7 +21,7 @@ def main():
     use_ragas = "--with-ragas" in sys.argv
 
     print("=" * 60)
-    print("🧪 SmartDesk AI — Full Evaluation Pipeline")
+    print("🧪 SmartHelpDesk AI — Full Evaluation Pipeline")
     print("=" * 60)
 
     # Step 1: Run golden set

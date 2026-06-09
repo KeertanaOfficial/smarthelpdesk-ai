@@ -12,7 +12,7 @@ HTML_TEMPLATE = """<!DOCTYPE html>
 <html>
 <head>
   <meta charset="utf-8">
-  <title>SmartDesk AI - Evaluation Report</title>
+  <title>SmartHelpDesk AI - Evaluation Report</title>
   <style>
     body {{ font-family: -apple-system, Segoe UI, sans-serif; max-width: 1200px; margin: 40px auto; padding: 20px; color: #333; }}
     h1 {{ border-bottom: 3px solid #4a90e2; padding-bottom: 10px; }}
@@ -34,7 +34,7 @@ HTML_TEMPLATE = """<!DOCTYPE html>
   </style>
 </head>
 <body>
-  <h1>🧪 SmartDesk AI — Evaluation Report</h1>
+  <h1>🧪 SmartHelpDesk AI — Evaluation Report</h1>
   <p><strong>Generated:</strong> {timestamp}</p>
 
   <h2>📊 Summary</h2>

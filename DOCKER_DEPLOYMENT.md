@@ -38,14 +38,14 @@ Add any additional environment variables your app requires.
 From the project root, run:
 
 ```bash
-docker build -t smartdesk-copilot .
+docker build -t smarthelpdesk-copilot .
 ```
 
 This command:
 
 * Reads the `Dockerfile`
 * Installs dependencies from `requirements.txt`
-* Packages the app into a Docker image named `smartdesk-copilot`
+* Packages the app into a Docker image named `smarthelpdesk-copilot`
 
 ***
 
@@ -54,7 +54,7 @@ This command:
 Start the application container with:
 
 ```bash
-docker run -d -p 8000:8000 --env-file .env --name smartdesk smartdesk-copilot
+docker run -d -p 8000:8000 --env-file .env --name smarthelpdesk smarthelpdesk-copilot
 ```
 
 ### What this does
@@ -62,7 +62,7 @@ docker run -d -p 8000:8000 --env-file .env --name smartdesk smartdesk-copilot
 * `-d` runs the container in detached mode
 * `-p 8000:8000` maps container port `8000` to local machine port `8000`
 * `--env-file .env` loads environment variables
-* `--name smartdesk` assigns a friendly container name
+* `--name smarthelpdesk` assigns a friendly container name
 
 ***
 
@@ -78,7 +78,7 @@ You should see a running container similar to:
 
 ```bash
 CONTAINER ID   IMAGE                PORTS                    NAMES
-abcd1234       smartdesk-copilot    0.0.0.0:8000->8000/tcp   smartdesk
+abcd1234       smarthelpdesk-copilot    0.0.0.0:8000->8000/tcp   smarthelpdesk
 ```
 
 ***
@@ -140,39 +140,39 @@ docker ps
 ### View logs
 
 ```bash
-docker logs smartdesk
+docker logs smarthelpdesk
 ```
 
 ### View live logs
 
 ```bash
-docker logs -f smartdesk
+docker logs -f smarthelpdesk
 ```
 
 ### Stop the container
 
 ```bash
-docker stop smartdesk
+docker stop smarthelpdesk
 ```
 
 ### Start the container again
 
 ```bash
-docker start smartdesk
+docker start smarthelpdesk
 ```
 
 ### Remove the container
 
 ```bash
-docker rm -f smartdesk
+docker rm -f smarthelpdesk
 ```
 
 ### Rebuild and rerun after code changes
 
 ```bash
-docker rm -f smartdesk
-docker build -t smartdesk-copilot .
-docker run -d -p 8000:8000 --env-file .env --name smartdesk smartdesk-copilot
+docker rm -f smarthelpdesk
+docker build -t smarthelpdesk-copilot .
+docker run -d -p 8000:8000 --env-file .env --name smarthelpdesk smarthelpdesk-copilot
 ```
 
 ***
@@ -239,7 +239,7 @@ Paste the required environment variables, save, and exit.
 ### 5. Build the Docker image on EC2
 
 ```bash
-docker build -t smartdesk-copilot .
+docker build -t smarthelpdesk-copilot .
 ```
 
 ***
@@ -247,7 +247,7 @@ docker build -t smartdesk-copilot .
 ### 6. Run the container on EC2
 
 ```bash
-docker run -d -p 8000:8000 --env-file .env --name smartdesk smartdesk-copilot
+docker run -d -p 8000:8000 --env-file .env --name smarthelpdesk smarthelpdesk-copilot
 ```
 
 ***
@@ -366,9 +366,9 @@ Docker is still running an old image.
 Rebuild and restart:
 
 ```bash
-docker rm -f smartdesk
-docker build -t smartdesk-copilot .
-docker run -d -p 8000:8000 --env-file .env --name smartdesk smartdesk-copilot
+docker rm -f smarthelpdesk
+docker build -t smarthelpdesk-copilot .
+docker run -d -p 8000:8000 --env-file .env --name smarthelpdesk smarthelpdesk-copilot
 ```
 
 ***
@@ -382,7 +382,7 @@ For a more production-ready deployment, consider:
 * Running containers with:
 
 ```bash
-docker run -d -p 8000:8000 --env-file .env --restart unless-stopped --name smartdesk smartdesk-copilot
+docker run -d -p 8000:8000 --env-file .env --restart unless-stopped --name smarthelpdesk smarthelpdesk-copilot
 ```
 
 * Hosting the admin dashboard on a **different internal-only port**
@@ -398,8 +398,8 @@ docker run -d -p 8000:8000 --env-file .env --restart unless-stopped --name smart
 ### Local
 
 ```bash
-docker build -t smartdesk-copilot .
-docker run -d -p 8000:8000 --env-file .env --name smartdesk smartdesk-copilot
+docker build -t smarthelpdesk-copilot .
+docker run -d -p 8000:8000 --env-file .env --name smarthelpdesk smarthelpdesk-copilot
 ```
 
 Open:
@@ -411,8 +411,8 @@ http://localhost:8000/docs
 ### EC2
 
 ```bash
-docker build -t smartdesk-copilot .
-docker run -d -p 8000:8000 --env-file .env --name smartdesk smartdesk-copilot
+docker build -t smarthelpdesk-copilot .
+docker run -d -p 8000:8000 --env-file .env --name smarthelpdesk smarthelpdesk-copilot
 ```
 
 Open:
@@ -447,7 +447,7 @@ If you want, I can next turn this into a **more polished README section with hea
 
 # Docker Deployment Guide
 
-This section explains how to run **SmartDesk Copilot** using Docker, both **locally** and on an **AWS EC2 instance**.
+This section explains how to run **SmartHelpDesk Copilot** using Docker, both **locally** and on an **AWS EC2 instance**.
 
 ## Prerequisites
 
@@ -489,14 +489,14 @@ Add any additional environment variables your app requires.
 From the project root, run:
 
 ```bash
-docker build -t smartdesk-copilot .
+docker build -t smarthelpdesk-copilot .
 ```
 
 This command:
 
 * Reads the `Dockerfile`
 * Installs dependencies from `requirements.txt`
-* Packages the app into a Docker image named `smartdesk-copilot`
+* Packages the app into a Docker image named `smarthelpdesk-copilot`
 
 ***
 
@@ -505,7 +505,7 @@ This command:
 Start the application container with:
 
 ```bash
-docker run -d -p 8000:8000 --env-file .env --name smartdesk smartdesk-copilot
+docker run -d -p 8000:8000 --env-file .env --name smarthelpdesk smarthelpdesk-copilot
 ```
 
 ### What this does
@@ -513,7 +513,7 @@ docker run -d -p 8000:8000 --env-file .env --name smartdesk smartdesk-copilot
 * `-d` runs the container in detached mode
 * `-p 8000:8000` maps container port `8000` to local machine port `8000`
 * `--env-file .env` loads environment variables
-* `--name smartdesk` assigns a friendly container name
+* `--name smarthelpdesk` assigns a friendly container name
 
 ***
 
@@ -529,7 +529,7 @@ You should see a running container similar to:
 
 ```bash
 CONTAINER ID   IMAGE                PORTS                    NAMES
-abcd1234       smartdesk-copilot    0.0.0.0:8000->8000/tcp   smartdesk
+abcd1234       smarthelpdesk-copilot    0.0.0.0:8000->8000/tcp   smarthelpdesk
 ```
 
 ***
@@ -591,39 +591,39 @@ docker ps
 ### View logs
 
 ```bash
-docker logs smartdesk
+docker logs smarthelpdesk
 ```
 
 ### View live logs
 
 ```bash
-docker logs -f smartdesk
+docker logs -f smarthelpdesk
 ```
 
 ### Stop the container
 
 ```bash
-docker stop smartdesk
+docker stop smarthelpdesk
 ```
 
 ### Start the container again
 
 ```bash
-docker start smartdesk
+docker start smarthelpdesk
 ```
 
 ### Remove the container
 
 ```bash
-docker rm -f smartdesk
+docker rm -f smarthelpdesk
 ```
 
 ### Rebuild and rerun after code changes
 
 ```bash
-docker rm -f smartdesk
-docker build -t smartdesk-copilot .
-docker run -d -p 8000:8000 --env-file .env --name smartdesk smartdesk-copilot
+docker rm -f smarthelpdesk
+docker build -t smarthelpdesk-copilot .
+docker run -d -p 8000:8000 --env-file .env --name smarthelpdesk smarthelpdesk-copilot
 ```
 
 ***
@@ -690,7 +690,7 @@ Paste the required environment variables, save, and exit.
 ### 5. Build the Docker image on EC2
 
 ```bash
-docker build -t smartdesk-copilot .
+docker build -t smarthelpdesk-copilot .
 ```
 
 ***
@@ -698,7 +698,7 @@ docker build -t smartdesk-copilot .
 ### 6. Run the container on EC2
 
 ```bash
-docker run -d -p 8000:8000 --env-file .env --name smartdesk smartdesk-copilot
+docker run -d -p 8000:8000 --env-file .env --name smarthelpdesk smarthelpdesk-copilot
 ```
 
 ***
@@ -817,9 +817,9 @@ Docker is still running an old image.
 Rebuild and restart:
 
 ```bash
-docker rm -f smartdesk
-docker build -t smartdesk-copilot .
-docker run -d -p 8000:8000 --env-file .env --name smartdesk smartdesk-copilot
+docker rm -f smarthelpdesk
+docker build -t smarthelpdesk-copilot .
+docker run -d -p 8000:8000 --env-file .env --name smarthelpdesk smarthelpdesk-copilot
 ```
 
 ***
@@ -833,7 +833,7 @@ For a more production-ready deployment, consider:
 * Running containers with:
 
 ```bash
-docker run -d -p 8000:8000 --env-file .env --restart unless-stopped --name smartdesk smartdesk-copilot
+docker run -d -p 8000:8000 --env-file .env --restart unless-stopped --name smarthelpdesk smarthelpdesk-copilot
 ```
 
 * Hosting the admin dashboard on a **different internal-only port**
@@ -849,8 +849,8 @@ docker run -d -p 8000:8000 --env-file .env --restart unless-stopped --name smart
 ### Local
 
 ```bash
-docker build -t smartdesk-copilot .
-docker run -d -p 8000:8000 --env-file .env --name smartdesk smartdesk-copilot
+docker build -t smarthelpdesk-copilot .
+docker run -d -p 8000:8000 --env-file .env --name smarthelpdesk smarthelpdesk-copilot
 ```
 
 Open:
@@ -862,8 +862,8 @@ http://localhost:8000/docs
 ### EC2
 
 ```bash
-docker build -t smartdesk-copilot .
-docker run -d -p 8000:8000 --env-file .env --name smartdesk smartdesk-copilot
+docker build -t smarthelpdesk-copilot .
+docker run -d -p 8000:8000 --env-file .env --name smarthelpdesk smarthelpdesk-copilot
 ```
 
 Open:
@@ -878,7 +878,7 @@ http://<EC2-PUBLIC-IP>:8000/docs
 
 # Docker Deployment Guide
 
-This section explains how to run **SmartDesk Copilot** using Docker, both **locally** and on an **AWS EC2 instance**.
+This section explains how to run **SmartHelpDesk Copilot** using Docker, both **locally** and on an **AWS EC2 instance**.
 
 ## Prerequisites
 
@@ -920,14 +920,14 @@ Add any additional environment variables your app requires.
 From the project root, run:
 
 ```bash
-docker build -t smartdesk-copilot .
+docker build -t smarthelpdesk-copilot .
 ```
 
 This command:
 
 * Reads the `Dockerfile`
 * Installs dependencies from `requirements.txt`
-* Packages the app into a Docker image named `smartdesk-copilot`
+* Packages the app into a Docker image named `smarthelpdesk-copilot`
 
 ***
 
@@ -936,7 +936,7 @@ This command:
 Start the application container with:
 
 ```bash
-docker run -d -p 8000:8000 --env-file .env --name smartdesk smartdesk-copilot
+docker run -d -p 8000:8000 --env-file .env --name smarthelpdesk smarthelpdesk-copilot
 ```
 
 ### What this does
@@ -944,7 +944,7 @@ docker run -d -p 8000:8000 --env-file .env --name smartdesk smartdesk-copilot
 * `-d` runs the container in detached mode
 * `-p 8000:8000` maps container port `8000` to local machine port `8000`
 * `--env-file .env` loads environment variables
-* `--name smartdesk` assigns a friendly container name
+* `--name smarthelpdesk` assigns a friendly container name
 
 ***
 
@@ -960,7 +960,7 @@ You should see a running container similar to:
 
 ```bash
 CONTAINER ID   IMAGE                PORTS                    NAMES
-abcd1234       smartdesk-copilot    0.0.0.0:8000->8000/tcp   smartdesk
+abcd1234       smarthelpdesk-copilot    0.0.0.0:8000->8000/tcp   smarthelpdesk
 ```
 
 ***
@@ -1022,39 +1022,39 @@ docker ps
 ### View logs
 
 ```bash
-docker logs smartdesk
+docker logs smarthelpdesk
 ```
 
 ### View live logs
 
 ```bash
-docker logs -f smartdesk
+docker logs -f smarthelpdesk
 ```
 
 ### Stop the container
 
 ```bash
-docker stop smartdesk
+docker stop smarthelpdesk
 ```
 
 ### Start the container again
 
 ```bash
-docker start smartdesk
+docker start smarthelpdesk
 ```
 
 ### Remove the container
 
 ```bash
-docker rm -f smartdesk
+docker rm -f smarthelpdesk
 ```
 
 ### Rebuild and rerun after code changes
 
 ```bash
-docker rm -f smartdesk
-docker build -t smartdesk-copilot .
-docker run -d -p 8000:8000 --env-file .env --name smartdesk smartdesk-copilot
+docker rm -f smarthelpdesk
+docker build -t smarthelpdesk-copilot .
+docker run -d -p 8000:8000 --env-file .env --name smarthelpdesk smarthelpdesk-copilot
 ```
 
 ***
@@ -1121,7 +1121,7 @@ Paste the required environment variables, save, and exit.
 ### 5. Build the Docker image on EC2
 
 ```bash
-docker build -t smartdesk-copilot .
+docker build -t smarthelpdesk-copilot .
 ```
 
 ***
@@ -1129,7 +1129,7 @@ docker build -t smartdesk-copilot .
 ### 6. Run the container on EC2
 
 ```bash
-docker run -d -p 8000:8000 --env-file .env --name smartdesk smartdesk-copilot
+docker run -d -p 8000:8000 --env-file .env --name smarthelpdesk smarthelpdesk-copilot
 ```
 
 ***
@@ -1248,9 +1248,9 @@ Docker is still running an old image.
 Rebuild and restart:
 
 ```bash
-docker rm -f smartdesk
-docker build -t smartdesk-copilot .
-docker run -d -p 8000:8000 --env-file .env --name smartdesk smartdesk-copilot
+docker rm -f smarthelpdesk
+docker build -t smarthelpdesk-copilot .
+docker run -d -p 8000:8000 --env-file .env --name smarthelpdesk smarthelpdesk-copilot
 ```
 
 ***
@@ -1264,7 +1264,7 @@ For a more production-ready deployment, consider:
 * Running containers with:
 
 ```bash
-docker run -d -p 8000:8000 --env-file .env --restart unless-stopped --name smartdesk smartdesk-copilot
+docker run -d -p 8000:8000 --env-file .env --restart unless-stopped --name smarthelpdesk smarthelpdesk-copilot
 ```
 
 * Hosting the admin dashboard on a **different internal-only port**
@@ -1280,8 +1280,8 @@ docker run -d -p 8000:8000 --env-file .env --restart unless-stopped --name smart
 ### Local
 
 ```bash
-docker build -t smartdesk-copilot .
-docker run -d -p 8000:8000 --env-file .env --name smartdesk smartdesk-copilot
+docker build -t smarthelpdesk-copilot .
+docker run -d -p 8000:8000 --env-file .env --name smarthelpdesk smarthelpdesk-copilot
 ```
 
 Open:
@@ -1293,8 +1293,8 @@ http://localhost:8000/docs
 ### EC2
 
 ```bash
-docker build -t smartdesk-copilot .
-docker run -d -p 8000:8000 --env-file .env --name smartdesk smartdesk-copilot
+docker build -t smarthelpdesk-copilot .
+docker run -d -p 8000:8000 --env-file .env --name smarthelpdesk smarthelpdesk-copilot
 ```
 
 Open:
@@ -1327,14 +1327,14 @@ Add any additional environment variables your app requires.
 From the project root, run:
 
 ```bash
-docker build -t smartdesk-copilot .
+docker build -t smarthelpdesk-copilot .
 ```
 
 This command:
 
 * Reads the `Dockerfile`
 * Installs dependencies from `requirements.txt`
-* Packages the app into a Docker image named `smartdesk-copilot`
+* Packages the app into a Docker image named `smarthelpdesk-copilot`
 
 ***
 
@@ -1343,7 +1343,7 @@ This command:
 Start the application container with:
 
 ```bash
-docker run -d -p 8000:8000 --env-file .env --name smartdesk smartdesk-copilot
+docker run -d -p 8000:8000 --env-file .env --name smarthelpdesk smarthelpdesk-copilot
 ```
 
 ### What this does
@@ -1351,7 +1351,7 @@ docker run -d -p 8000:8000 --env-file .env --name smartdesk smartdesk-copilot
 * `-d` runs the container in detached mode
 * `-p 8000:8000` maps container port `8000` to local machine port `8000`
 * `--env-file .env` loads environment variables
-* `--name smartdesk` assigns a friendly container name
+* `--name smarthelpdesk` assigns a friendly container name
 
 ***
 
@@ -1367,7 +1367,7 @@ You should see a running container similar to:
 
 ```bash
 CONTAINER ID   IMAGE                PORTS                    NAMES
-abcd1234       smartdesk-copilot    0.0.0.0:8000->8000/tcp   smartdesk
+abcd1234       smarthelpdesk-copilot    0.0.0.0:8000->8000/tcp   smarthelpdesk
 ```
 
 ***
@@ -1429,39 +1429,39 @@ docker ps
 ### View logs
 
 ```bash
-docker logs smartdesk
+docker logs smarthelpdesk
 ```
 
 ### View live logs
 
 ```bash
-docker logs -f smartdesk
+docker logs -f smarthelpdesk
 ```
 
 ### Stop the container
 
 ```bash
-docker stop smartdesk
+docker stop smarthelpdesk
 ```
 
 ### Start the container again
 
 ```bash
-docker start smartdesk
+docker start smarthelpdesk
 ```
 
 ### Remove the container
 
 ```bash
-docker rm -f smartdesk
+docker rm -f smarthelpdesk
 ```
 
 ### Rebuild and rerun after code changes
 
 ```bash
-docker rm -f smartdesk
-docker build -t smartdesk-copilot .
-docker run -d -p 8000:8000 --env-file .env --name smartdesk smartdesk-copilot
+docker rm -f smarthelpdesk
+docker build -t smarthelpdesk-copilot .
+docker run -d -p 8000:8000 --env-file .env --name smarthelpdesk smarthelpdesk-copilot
 ```
 
 ***
@@ -1528,7 +1528,7 @@ Paste the required environment variables, save, and exit.
 ### 5. Build the Docker image on EC2
 
 ```bash
-docker build -t smartdesk-copilot .
+docker build -t smarthelpdesk-copilot .
 ```
 
 ***
@@ -1536,7 +1536,7 @@ docker build -t smartdesk-copilot .
 ### 6. Run the container on EC2
 
 ```bash
-docker run -d -p 8000:8000 --env-file .env --name smartdesk smartdesk-copilot
+docker run -d -p 8000:8000 --env-file .env --name smarthelpdesk smarthelpdesk-copilot
 ```
 
 ***
@@ -1655,9 +1655,9 @@ Docker is still running an old image.
 Rebuild and restart:
 
 ```bash
-docker rm -f smartdesk
-docker build -t smartdesk-copilot .
-docker run -d -p 8000:8000 --env-file .env --name smartdesk smartdesk-copilot
+docker rm -f smarthelpdesk
+docker build -t smarthelpdesk-copilot .
+docker run -d -p 8000:8000 --env-file .env --name smarthelpdesk smarthelpdesk-copilot
 ```
 
 ***
@@ -1671,7 +1671,7 @@ For a more production-ready deployment, consider:
 * Running containers with:
 
 ```bash
-docker run -d -p 8000:8000 --env-file .env --restart unless-stopped --name smartdesk smartdesk-copilot
+docker run -d -p 8000:8000 --env-file .env --restart unless-stopped --name smarthelpdesk smarthelpdesk-copilot
 ```
 
 * Hosting the admin dashboard on a **different internal-only port**
@@ -1687,8 +1687,8 @@ docker run -d -p 8000:8000 --env-file .env --restart unless-stopped --name smart
 ### Local
 
 ```bash
-docker build -t smartdesk-copilot .
-docker run -d -p 8000:8000 --env-file .env --name smartdesk smartdesk-copilot
+docker build -t smarthelpdesk-copilot .
+docker run -d -p 8000:8000 --env-file .env --name smarthelpdesk smarthelpdesk-copilot
 ```
 
 Open:
@@ -1700,8 +1700,8 @@ http://localhost:8000/docs
 ### EC2
 
 ```bash
-docker build -t smartdesk-copilot .
-docker run -d -p 8000:8000 --env-file .env --name smartdesk smartdesk-copilot
+docker build -t smarthelpdesk-copilot .
+docker run -d -p 8000:8000 --env-file .env --name smarthelpdesk smarthelpdesk-copilot
 ```
 
 Open:

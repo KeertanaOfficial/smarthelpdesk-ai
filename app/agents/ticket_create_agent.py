@@ -10,22 +10,14 @@ def ticket_create_agent(state: AgentState) -> AgentState:
     # Extract email if present
     email_match = re.search(r'[\w\.-]+@[\w\.-]+\.\w+', state.user_message)
 
-    clean_message = state.user_message
+    raw_message = state.user_message
 
-    # Remove email from sentence
-    if email_match:
-        clean_message = clean_message.replace(email_match.group(0), "")
-
-    # Remove ticket creation filler words
-    clean_message = (
-        clean_message
-        .replace("can you create a ticket for", "")
-        .replace("create a ticket for", "")
-        .replace("create ticket for", "")
-        .replace("for the email", "")
-        .replace("please", "")
-        .strip()
-    )
+   # Remove ticket creation filler words
+    clean_message = re.sub(
+            r"\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}\b",
+            "",
+            raw_message,
+        ).strip()
 
     # Cleanup spaces
     clean_message = " ".join(clean_message.split())

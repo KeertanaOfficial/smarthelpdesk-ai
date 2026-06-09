@@ -1,5 +1,5 @@
 """
-SmartDesk Admin Dashboard
+SmartHelpDesk Admin Dashboard
 Run:
 streamlit run ui/admin_dashboard.py --server.port 8502
 """
@@ -20,7 +20,7 @@ CONVERSATIONS_URL = f"{API_BASE}/admin/conversations"
 DECISIONS_URL = f"{API_BASE}/admin/decisions"
 
 st.set_page_config(
-    page_title="SmartDesk Admin",
+    page_title="SmartHelpDesk Admin",
     page_icon="📊",
     layout="wide"
 )
@@ -42,7 +42,7 @@ def fetch_json(url):
 # HEADER
 # ============================================================
 
-st.title("📊 SmartDesk Admin Dashboard")
+st.title("📊 SmartHelpDesk Admin Dashboard")
 st.caption("Internal analytics, conversations, tickets, and routing decisions.")
 
 # ============================================================

@@ -33,7 +33,7 @@ from app.db.models import (
 # ============================================================
 
 app = FastAPI(
-    title="SmartDesk AI",
+    title="SmartHelpDesk AI",
     version="1.0.0",
 )
 

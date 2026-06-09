@@ -1,4 +1,4 @@
-# SmartDesk AI — Deployment Guide & Troubleshooting Reference
+# SmartHelpDesk AI — Deployment Guide & Troubleshooting Reference
 
 ---
 
@@ -17,24 +17,24 @@
 #### 1.1 Build the Docker Image
 ```bash
 # From your project root (where Dockerfile lives)
-docker build -t smartdesk-copilot .
+docker build -t smarthelpdesk-copilot .
 ```
 
 #### 1.2 Run Locally to Verify
 ```bash
 docker run -d \
-  --name smartdesk \
+  --name smarthelpdesk \
   -p 8000:8000 \
   --env-file .env \
-  smartdesk-copilot
+  smarthelpdesk-copilot
 
 # Run frontend
 docker run -d \
-  --name smartdesk-ui \
+  --name smarthelpdesk-ui \
   -p 8501:8501 \
-  --link smartdesk \
-  -e API_URL=http://smartdesk:8000 \
-  smartdesk-copilot \
+  --link smarthelpdesk \
+  -e API_URL=http://smarthelpdesk:8000 \
+  smarthelpdesk-copilot \
   streamlit run ui/app.py --server.port 8501 --server.address 0.0.0.0
 ```
 
@@ -52,7 +52,7 @@ Frontend: http://localhost:8501
 1. Go to [hub.docker.com](https://hub.docker.com)
 2. Sign up / Log in
 3. Click **Create Repository**
-4. Name it `smartdesk-copilot`, set to **Public**
+4. Name it `smarthelpdesk-copilot`, set to **Public**
 5. Click **Create**
 
 #### 2.2 Login and Push Locally
@@ -62,10 +62,10 @@ docker logout
 docker login
 
 # Tag image with your Docker Hub username
-docker tag smartdesk-copilot YOUR_DOCKERHUB_USERNAME/smartdesk-copilot:latest
+docker tag smarthelpdesk-copilot YOUR_DOCKERHUB_USERNAME/smarthelpdesk-copilot:latest
 
 # Push
-docker push YOUR_DOCKERHUB_USERNAME/smartdesk-copilot:latest
+docker push YOUR_DOCKERHUB_USERNAME/smarthelpdesk-copilot:latest
 ```
 
 > **Note:** If push fails with "insufficient scope", create a Personal Access Token at Docker Hub → Account Settings → Personal Access Tokens with **Read & Write** permissions, and use that as your password when logging in.
@@ -76,7 +76,7 @@ docker push YOUR_DOCKERHUB_USERNAME/smartdesk-copilot:latest
 
 #### 3.1 Launch EC2 Instance
 1. Go to **EC2 → Launch Instance**
-2. Name: `smartdesk-ai`
+2. Name: `smarthelpdesk-ai`
 3. AMI: **Amazon Linux 2023**
 4. Instance type: **t2.medium** (recommended — 4GB RAM needed for two containers)
 5. Key pair: Create new → Download `.pem` file → **save it securely**
@@ -138,11 +138,11 @@ exit  # Re-login for group change
 #### 5.2 Pull and Run Containers
 ```bash
 # Pull image
-docker pull YOUR_DOCKERHUB_USERNAME/smartdesk-copilot:latest
+docker pull YOUR_DOCKERHUB_USERNAME/smarthelpdesk-copilot:latest
 
 # Run backend
 docker run -d \
-  --name smartdesk \
+  --name smarthelpdesk \
   --restart always \
   -p 8000:8000 \
   -e OPENAI_API_KEY=your-key \
@@ -150,21 +150,21 @@ docker run -d \
   -e CHROMA_PERSIST_DIR=data/chroma \
   -e TICKET_BACKEND=mock \
   -e APP_ENV=dev \
-  YOUR_DOCKERHUB_USERNAME/smartdesk-copilot:latest
+  YOUR_DOCKERHUB_USERNAME/smarthelpdesk-copilot:latest
 
 # Run frontend
 docker run -d \
-  --name smartdesk-ui \
+  --name smarthelpdesk-ui \
   --restart always \
   -p 8501:8501 \
-  --link smartdesk \
-  YOUR_DOCKERHUB_USERNAME/smartdesk-copilot:latest \
+  --link smarthelpdesk \
+  YOUR_DOCKERHUB_USERNAME/smarthelpdesk-copilot:latest \
   streamlit run ui/app.py --server.port 8501 --server.address 0.0.0.0
 ```
 
 #### 5.3 Initialize the Database
 ```bash
-docker exec smartdesk python -c "
+docker exec smarthelpdesk python -c "
 from app.db.models import Base
 from sqlalchemy import create_engine
 engine = create_engine('sqlite:///data/app.db')
@@ -271,7 +271,7 @@ Frontend: http://YOUR_ELASTIC_IP:8501
 ```bash
 docker logout
 docker login  # Use password or PAT with Read & Write scope
-docker push YOUR_USERNAME/smartdesk-copilot:latest
+docker push YOUR_USERNAME/smarthelpdesk-copilot:latest
 ```
 
 ---
@@ -294,13 +294,13 @@ df -h  # Verify new size
 ---
 
 ### Issue 8: Container Name Already in Use
-**Symptom:** `The container name "/smartdesk" is already in use`
+**Symptom:** `The container name "/smarthelpdesk" is already in use`
 
 **Cause:** A previous container with the same name exists (even if stopped).
 
 **Solution:**
 ```bash
-docker rm -f smartdesk  # Force remove existing container
+docker rm -f smarthelpdesk  # Force remove existing container
 docker run ...          # Then re-run
 ```
 
@@ -314,10 +314,10 @@ docker run ...          # Then re-run
 **Solution:**
 ```bash
 # Fix hardcoded URLs inside the running container
-docker exec -it smartdesk-ui sed -i \
-  's|http://127.0.0.1:8000/chat|http://smartdesk:8000/chat|g; s|http://127.0.0.1:8000/session|http://smartdesk:8000/session|g' \
+docker exec -it smarthelpdesk-ui sed -i \
+  's|http://127.0.0.1:8000/chat|http://smarthelpdesk:8000/chat|g; s|http://127.0.0.1:8000/session|http://smarthelpdesk:8000/session|g' \
   ui/app.py
-docker restart smartdesk-ui
+docker restart smarthelpdesk-ui
 ```
 
 > **Long-term fix:** Update `ui/app.py` to read the URL from an environment variable, rebuild and push the image.
@@ -336,7 +336,7 @@ docker restart smartdesk-ui
 - Remove the `-v` volume mount so the image uses its own built-in `data/chroma`
 - Initialize the database:
 ```bash
-docker exec smartdesk python -c "
+docker exec smarthelpdesk python -c "
 from app.db.models import Base
 from sqlalchemy import create_engine
 engine = create_engine('sqlite:///data/app.db')
@@ -372,7 +372,7 @@ print('Done')
 3. Download on EC2 via Run Command:
 ```bash
 aws s3 cp s3://your-bucket/chroma /home/ec2-user/data/chroma --recursive
-docker cp /home/ec2-user/data/chroma smartdesk:/app/data/chroma
+docker cp /home/ec2-user/data/chroma smarthelpdesk:/app/data/chroma
 ```
 
 ---
@@ -393,10 +393,10 @@ docker cp /home/ec2-user/data/chroma smartdesk:/app/data/chroma
 docker ps
 
 # View container logs
-docker logs smartdesk 2>&1 | tail -50
+docker logs smarthelpdesk 2>&1 | tail -50
 
 # Restart a container
-docker restart smartdesk
+docker restart smarthelpdesk
 
 # Free up disk space
 docker system prune -af && docker volume prune -f
@@ -421,11 +421,11 @@ Internet
     ▼
 Elastic IP (23.21.203.201)
     │
-    ├── Port 8501 → smartdesk-ui container (Streamlit)
+    ├── Port 8501 → smarthelpdesk-ui container (Streamlit)
     │                    │
-    │                    └── http://smartdesk:8000 (Docker internal network)
+    │                    └── http://smarthelpdesk:8000 (Docker internal network)
     │
-    └── Port 8000 → smartdesk container (FastAPI/Uvicorn)
+    └── Port 8000 → smarthelpdesk container (FastAPI/Uvicorn)
                          │
                          ├── ChromaDB (data/chroma — baked into image)
                          ├── SQLite (data/app.db)

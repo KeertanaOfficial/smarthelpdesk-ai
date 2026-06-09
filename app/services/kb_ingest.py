@@ -1,5 +1,5 @@
 """
-Production-grade batched ingestion for SmartDesk AI.
+Production-grade batched ingestion for SmartHelpDesk AI.
 Run: python -m app.services.kb_ingest
 """
 
@@ -64,7 +64,7 @@ def ingest_collection(docs, collection_name):
 
 def main():
     print("=" * 60)
-    print("🚀 SmartDesk AI — Production Ingestion Pipeline")
+    print("🚀 SmartHelpDesk AI — Production Ingestion Pipeline")
     print("=" * 60)
 
     print("\n[Step 1/3] Building normalized KB...")

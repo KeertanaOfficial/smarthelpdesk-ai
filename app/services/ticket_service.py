@@ -30,9 +30,9 @@ class DBTicketService(TicketService):
 
             ticket = Ticket(
                 id=ticket_id,
-                email=payload.get("email"),                 # ✅ FIXED
-                summary=payload.get("summary"),             # ✅ FIXED
-                description=payload.get("description"),     # ✅ FIXED
+                email=payload.get("email"),          
+                summary=payload.get("summary"),           
+                description=payload.get("description"),    
                 category=payload.get("category", "IT"),
                 priority=payload.get("priority", "Medium"),
                 status="Open",
@@ -44,7 +44,7 @@ class DBTicketService(TicketService):
 
             return {
                 "ticket_id": ticket_id,
-                "ticket_url": f"http://127.0.0.1:8000/admin/tickets/{ticket_id}",  # ✅ FIXED
+                "ticket_url": f"http://127.0.0.1:8000/admin/tickets/{ticket_id}",  
                 "status": "Open"
             }
 
@@ -97,9 +97,6 @@ class MockTicketService(TicketService):
         return []
 
 
-# ============================================================
-# FACTORY — CRITICAL FIX
-# ============================================================
 def get_ticket_service() -> TicketService:
     backend = os.getenv("TICKET_BACKEND", "db").lower()
 

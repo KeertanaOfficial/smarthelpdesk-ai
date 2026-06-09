@@ -187,7 +187,7 @@ class EvalRunner:
 
 def main():
     print("=" * 60)
-    print("🧪 SmartDesk AI — Evaluation Suite")
+    print("🧪 SmartHelpDesk AI — Evaluation Suite")
     print("=" * 60)
 
     runner = EvalRunner()

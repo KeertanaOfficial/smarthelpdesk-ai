@@ -1,5 +1,5 @@
 """
-SmartDesk Copilot - Streamlit Chat UI
+SmartHelpDesk Copilot - Streamlit Chat UI
 
 Run:
 python -m streamlit run ui/app.py
@@ -17,7 +17,7 @@ API_URL = "http://127.0.0.1:8000/chat"
 RESET_BASE_URL = "http://127.0.0.1:8000/session"
 
 st.set_page_config(
-    page_title="SmartDesk Copilot",
+    page_title="SmartHelpDesk Copilot",
     page_icon="💬",
     layout="wide",
 )
@@ -218,7 +218,7 @@ with st.sidebar:
 # MAIN CHAT UI
 # ============================================================
 
-st.title("💬 SmartDesk Copilot")
+st.title("💬 SmartHelpDesk Copilot")
 st.caption(
     "Ask questions about HR policies, IT support, password resets, VPN issues, or ticket status."
 )

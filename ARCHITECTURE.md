@@ -1,12 +1,8 @@
-## ARCHITECTURE.md — Deep technical doc
-
-Create `ARCHITECTURE.md` at project root:
-
-# 🏗️ SmartDesk AI — Architecture Deep Dive
+# 🏗️ SmartHelpDesk AI — Architecture Deep Dive
 
 ## System Overview
 
-SmartDesk AI is a **multi-agent helpdesk assistant** built on the principle:
+SmartHelpDesk AI is a **multi-agent helpdesk assistant** built on the principle:
 > *"One shared platform with thin specialized agents — not 5 separate systems."*
 
 ## Agent Topology

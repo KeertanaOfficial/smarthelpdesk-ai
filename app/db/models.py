@@ -45,7 +45,7 @@ class Ticket(Base):
 
     status = Column(String, default="Open")
 
-    created_at = Column(DateTime, default=datetime.datetime.utcnow)
+    created_at = Column(DateTime, default=datetime.datetime)
 
 
 # ============================================================
