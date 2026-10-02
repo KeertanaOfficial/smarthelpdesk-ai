@@ -49,6 +49,32 @@ class Ticket(Base):
 
 
 # ============================================================
+# Users (per-user login)
+# ============================================================
+class User(Base):
+    __tablename__ = "users"
+
+    id = Column(String, primary_key=True, default=lambda: str(uuid.uuid4()))
+    username = Column(String, unique=True, index=True, nullable=False)
+    hashed_password = Column(String, nullable=False)
+
+    created_at = Column(DateTime, default=datetime.datetime.utcnow)
+
+
+# ============================================================
+# Auth tokens (opaque bearer tokens issued at login)
+# ============================================================
+class AuthToken(Base):
+    __tablename__ = "auth_tokens"
+
+    token = Column(String, primary_key=True)
+    user_id = Column(String, index=True, nullable=False)
+
+    created_at = Column(DateTime, default=datetime.datetime.utcnow)
+    expires_at = Column(DateTime, nullable=True)
+
+
+# ============================================================
 # Decisions (super important for debugging)
 # ============================================================
 class DecisionLog(Base):

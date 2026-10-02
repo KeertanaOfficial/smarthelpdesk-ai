@@ -4,6 +4,7 @@ Run:
 streamlit run ui/admin_dashboard.py --server.port 8502
 """
 
+import os
 import requests
 import pandas as pd
 import streamlit as st
@@ -12,8 +13,9 @@ import streamlit as st
 # CONFIG
 # ============================================================
 
-API_BASE = "http://127.0.0.1:8000"
+API_BASE = os.getenv("API_URL", "http://127.0.0.1:8000")
 
+LOGIN_URL = f"{API_BASE}/auth/login"
 SUMMARY_URL = f"{API_BASE}/admin/summary"
 TICKETS_URL = f"{API_BASE}/admin/tickets"
 CONVERSATIONS_URL = f"{API_BASE}/admin/conversations"
@@ -26,12 +28,56 @@ st.set_page_config(
 )
 
 # ============================================================
+# AUTH GATE
+# ============================================================
+# /admin/* endpoints require a bearer token (see app/core/security.py),
+# so this standalone dashboard needs its own lightweight login, same
+# backend as the main chat UI. Admins log in with the same
+# username/password created via /auth/register.
+# ============================================================
+
+if "access_token" not in st.session_state:
+    st.session_state.access_token = None
+    st.session_state.auth_username = None
+
+if not st.session_state.access_token:
+    st.title("📊 SmartHelpDesk Admin Dashboard")
+    st.caption("Log in with your SmartHelpDesk account to view admin data.")
+
+    with st.form("admin_login_form"):
+        username = st.text_input("Username")
+        password = st.text_input("Password", type="password")
+        submitted = st.form_submit_button("Log in")
+
+    if submitted:
+        try:
+            resp = requests.post(
+                LOGIN_URL,
+                json={"username": username, "password": password},
+                timeout=30,
+            )
+            resp.raise_for_status()
+            data = resp.json()
+            st.session_state.access_token = data["access_token"]
+            st.session_state.auth_username = data["username"]
+            st.rerun()
+        except Exception as e:
+            st.error(f"Login failed: {str(e)}")
+
+    st.stop()
+
+
+def _auth_headers():
+    return {"Authorization": f"Bearer {st.session_state.access_token}"}
+
+
+# ============================================================
 # HELPERS
 # ============================================================
 
 def fetch_json(url):
     try:
-        response = requests.get(url, timeout=30)
+        response = requests.get(url, headers=_auth_headers(), timeout=30)
         response.raise_for_status()
         return response.json()
     except Exception as e:
@@ -41,6 +87,13 @@ def fetch_json(url):
 # ============================================================
 # HEADER
 # ============================================================
+
+with st.sidebar:
+    st.caption(f"Signed in as **{st.session_state.auth_username}**")
+    if st.button("Log out", use_container_width=True):
+        st.session_state.access_token = None
+        st.session_state.auth_username = None
+        st.rerun()
 
 st.title("📊 SmartHelpDesk Admin Dashboard")
 st.caption("Internal analytics, conversations, tickets, and routing decisions.")

@@ -20,6 +20,8 @@ import streamlit as st
 API_BASE_URL = os.getenv("API_URL", "http://127.0.0.1:8000")
 API_URL = f"{API_BASE_URL}/chat"
 RESET_BASE_URL = f"{API_BASE_URL}/session"
+LOGIN_URL = f"{API_BASE_URL}/auth/login"
+REGISTER_URL = f"{API_BASE_URL}/auth/register"
 
 st.set_page_config(
     page_title="SmartHelpDesk Copilot",
@@ -74,6 +76,79 @@ if "email" not in st.session_state:
 
 if "pending_query" not in st.session_state:
     st.session_state.pending_query = None
+
+if "access_token" not in st.session_state:
+    st.session_state.access_token = None
+
+if "auth_username" not in st.session_state:
+    st.session_state.auth_username = None
+
+# ============================================================
+# LOGIN / REGISTER GATE
+# ============================================================
+# Nothing below this runs until the user is authenticated. Every
+# backend call this app makes requires a valid bearer token, so there
+# is no point rendering the chat UI before login succeeds.
+
+def _auth_headers():
+    return {"Authorization": f"Bearer {st.session_state.access_token}"}
+
+
+if not st.session_state.access_token:
+    st.title("\U0001F510 SmartHelpDesk Copilot")
+    st.caption("Sign in to continue.")
+
+    login_tab, register_tab = st.tabs(["Log in", "Create account"])
+
+    with login_tab:
+        with st.form("login_form"):
+            login_username = st.text_input("Username", key="login_username")
+            login_password = st.text_input("Password", type="password", key="login_password")
+            submitted = st.form_submit_button("Log in", use_container_width=True)
+
+        if submitted:
+            try:
+                resp = requests.post(
+                    LOGIN_URL,
+                    json={"username": login_username, "password": login_password},
+                    timeout=30,
+                )
+                if resp.status_code == 200:
+                    data = resp.json()
+                    st.session_state.access_token = data["access_token"]
+                    st.session_state.auth_username = data["username"]
+                    st.rerun()
+                else:
+                    detail = resp.json().get("detail", "Login failed")
+                    st.error(detail)
+            except Exception as e:
+                st.error(f"Could not reach the server: {e}")
+
+    with register_tab:
+        with st.form("register_form"):
+            reg_username = st.text_input("Choose a username", key="reg_username")
+            reg_password = st.text_input("Choose a password", type="password", key="reg_password")
+            reg_submitted = st.form_submit_button("Create account", use_container_width=True)
+
+        if reg_submitted:
+            try:
+                resp = requests.post(
+                    REGISTER_URL,
+                    json={"username": reg_username, "password": reg_password},
+                    timeout=30,
+                )
+                if resp.status_code == 200:
+                    data = resp.json()
+                    st.session_state.access_token = data["access_token"]
+                    st.session_state.auth_username = data["username"]
+                    st.rerun()
+                else:
+                    detail = resp.json().get("detail", "Registration failed")
+                    st.error(detail)
+            except Exception as e:
+                st.error(f"Could not reach the server: {e}")
+
+    st.stop()
 
 # ============================================================
 # SUGGESTED QUESTIONS
@@ -140,7 +215,7 @@ def call_api(message: str):
         "email": st.session_state.email,
     }
 
-    resp = requests.post(API_URL, json=payload, timeout=120)
+    resp = requests.post(API_URL, json=payload, headers=_auth_headers(), timeout=120)
     resp.raise_for_status()
     return resp.json()
 
@@ -155,6 +230,7 @@ def reset_conversation():
     try:
         requests.delete(
             f"{RESET_BASE_URL}/{st.session_state.session_id}",
+            headers=_auth_headers(),
             timeout=10,
         )
     except Exception:
@@ -176,6 +252,15 @@ def trigger_prompt(prompt_text: str):
 # ============================================================
 
 with st.sidebar:
+    st.caption(f"Signed in as **{st.session_state.auth_username}**")
+    if st.button("Log out", use_container_width=True):
+        st.session_state.access_token = None
+        st.session_state.auth_username = None
+        st.session_state.messages = []
+        st.rerun()
+
+    st.divider()
+
     st.subheader("Start a new conversation:")
     if st.button("New Conversation", use_container_width=True):
         reset_conversation()

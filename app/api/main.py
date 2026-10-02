@@ -1,4 +1,4 @@
-from fastapi import FastAPI
+from fastapi import FastAPI, HTTPException, Depends
 from pydantic import BaseModel
 from typing import Optional
 import traceback
@@ -26,8 +26,15 @@ from app.db.models import (
     Ticket,
     Conversation,
     DecisionLog,
+    User,
 )
 from app.services.kb_ingest import ensure_kb_ingested
+from app.core.security import (
+    hash_password,
+    verify_password,
+    create_token_for_user,
+    get_current_user,
+)
 
 # ============================================================
 # FastAPI App
@@ -68,6 +75,16 @@ class ChatRequest(BaseModel):
     session_id: Optional[str] = None
     email: Optional[str] = None
     confirm: bool = False
+
+
+class RegisterRequest(BaseModel):
+    username: str
+    password: str
+
+
+class LoginRequest(BaseModel):
+    username: str
+    password: str
 
 
 # ============================================================
@@ -111,12 +128,58 @@ def health():
 
 
 # ============================================================
+# Auth Endpoints
+# ============================================================
+
+
+@app.post("/auth/register")
+def register(req: RegisterRequest):
+    username = req.username.strip()
+
+    if len(username) < 3:
+        raise HTTPException(status_code=400, detail="Username must be at least 3 characters")
+    if len(req.password) < 6:
+        raise HTTPException(status_code=400, detail="Password must be at least 6 characters")
+
+    db = SessionLocal()
+    try:
+        existing = db.query(User).filter(User.username == username).first()
+        if existing:
+            raise HTTPException(status_code=400, detail="Username already taken")
+
+        user = User(username=username, hashed_password=hash_password(req.password))
+        db.add(user)
+        db.commit()
+        db.refresh(user)
+
+        token = create_token_for_user(db, user.id)
+        return {"access_token": token, "username": user.username}
+    finally:
+        db.close()
+
+
+@app.post("/auth/login")
+def login(req: LoginRequest):
+    db = SessionLocal()
+    try:
+        user = db.query(User).filter(User.username == req.username.strip()).first()
+
+        if not user or not verify_password(req.password, user.hashed_password):
+            raise HTTPException(status_code=401, detail="Invalid username or password")
+
+        token = create_token_for_user(db, user.id)
+        return {"access_token": token, "username": user.username}
+    finally:
+        db.close()
+
+
+# ============================================================
 # Reset Session
 # ============================================================
 
 
 @app.delete("/session/{session_id}")
-def reset_session(session_id: str):
+def reset_session(session_id: str, current_user: User = Depends(get_current_user)):
 
     clear_session(session_id)
 
@@ -132,7 +195,7 @@ def reset_session(session_id: str):
 
 
 @app.post("/chat")
-def chat(req: ChatRequest):
+def chat(req: ChatRequest, current_user: User = Depends(get_current_user)):
 
     try:
 
@@ -303,7 +366,7 @@ from app.db.models import Ticket, Conversation, DecisionLog
 
 
 @app.get("/admin/summary")
-def admin_summary():
+def admin_summary(current_user: User = Depends(get_current_user)):
     db = SessionLocal()
 
     try:
@@ -318,7 +381,7 @@ def admin_summary():
 
 
 @app.get("/admin/tickets")
-def admin_tickets():
+def admin_tickets(current_user: User = Depends(get_current_user)):
     db = SessionLocal()
 
     try:
@@ -346,7 +409,7 @@ def admin_tickets():
 
 
 @app.get("/admin/conversations")
-def admin_conversations():
+def admin_conversations(current_user: User = Depends(get_current_user)):
     db = SessionLocal()
 
     try:
@@ -372,7 +435,7 @@ def admin_conversations():
 
 
 @app.get("/admin/decisions")
-def admin_decisions():
+def admin_decisions(current_user: User = Depends(get_current_user)):
     db = SessionLocal()
 
     try:

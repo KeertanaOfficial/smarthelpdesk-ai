@@ -15,3 +15,4 @@ streamlit
 presidio_analyzer
 presidio_anonymizer
 spacy
+bcrypt

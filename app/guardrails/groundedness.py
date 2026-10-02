@@ -54,7 +54,7 @@ def check_groundedness(answer: str, context_chunks: list) -> dict:
         }
 
     context_text = "\n\n".join(
-        f"[Source: {c.source}]\n{c.content}" for c in context_chunks
+        f"[Source: {c.metadata.get('source', 'unknown')}]\n{c.content}" for c in context_chunks
     )
 
     user_prompt = (

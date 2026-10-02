@@ -154,6 +154,24 @@ def human_confirmation(state: AgentState) -> AgentState:
 
 
 # ============================================================
+# Fallback (anything the router could not confidently classify)
+# ============================================================
+def fallback_agent(state: AgentState) -> AgentState:
+    """
+    Catches cases where the router's intent/domain classification did not
+    match any known route (e.g. the LLM returns domain=unknown, or an
+    unrecognized intent). Without this, those cases silently fall through
+    to output_guard with answer still at its empty default, which the
+    user sees as a blank/failed response with no error logged anywhere.
+    """
+    state.answer = (
+        "I'm not sure I understood that question. Could you rephrase it, "
+        "or let me know if you'd like to create a support ticket instead?"
+    )
+    return state
+
+
+# ============================================================
 # Routing
 # ============================================================
 def route_after_input_guard(state: AgentState):
@@ -175,7 +193,7 @@ def route_after_router(state: AgentState):
         return "hr_agent"
     if state.intent == "kb_query" and state.domain == "it":
         return "it_agent"
-    return "output_guard"
+    return "fallback"
 
 
 def route_after_specialist(state: AgentState):
@@ -224,6 +242,7 @@ def build_graph(use_checkpointer: bool = False):
     graph.add_node("ticket_status", ticket_status_agent)
     graph.add_node("human_confirmation", human_confirmation)
     graph.add_node("output_guard", output_guard)
+    graph.add_node("fallback", fallback_agent)
 
     graph.set_entry_point("input_guard")
 
@@ -239,6 +258,7 @@ def build_graph(use_checkpointer: bool = False):
         "ticket_create": "ticket_create",
         "ticket_status": "ticket_status",
         "output_guard": "output_guard",
+        "fallback": "fallback",
     })
 
     graph.add_conditional_edges("hr_agent", route_after_specialist, {
@@ -263,5 +283,6 @@ def build_graph(use_checkpointer: bool = False):
     })
 
     graph.add_edge("ticket_status", "output_guard")
+    graph.add_edge("fallback", "output_guard")
     graph.add_edge("output_guard", END)
     return graph.compile()
