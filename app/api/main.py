@@ -21,12 +21,13 @@ from app.agents.ticket_create_agent import (
     ticket_create_agent,
 )
 
-from app.db.db import SessionLocal
+from app.db.db import SessionLocal, init_db
 from app.db.models import (
     Ticket,
     Conversation,
     DecisionLog,
 )
+from app.services.kb_ingest import ensure_kb_ingested
 
 # ============================================================
 # FastAPI App
@@ -36,6 +37,20 @@ app = FastAPI(
     title="SmartHelpDesk AI",
     version="1.0.0",
 )
+
+# ============================================================
+# Startup: make sure the SQLite tables exist before anything
+# tries to write to them (tickets, conversations, decision_logs).
+# Without this, a fresh container/DB file fails on first request
+# with "no such table: decision_logs" (previously a manual step).
+# ============================================================
+
+
+@app.on_event("startup")
+def on_startup():
+    init_db()
+    ensure_kb_ingested()
+
 
 # ============================================================
 # Build LangGraph Workflow
@@ -275,7 +290,7 @@ def chat(req: ChatRequest):
             "error": str(e),
             "session_id": req.session_id,
         }
-    
+
 # ============================================================
 # ADMIN APIs
 # ============================================================

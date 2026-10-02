@@ -1,0 +1,32 @@
+.git
+.gitignore
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.venv/
+venv/
+env/
+ENV/
+
+# Never bake secrets or local env files into the image
+.env
+.env.*
+!.env.example
+
+# Local runtime state / generated data — the container builds its own
+data/chroma/
+data/langgraph_checkpoints.db
+data/app.db
+data/sessions.db
+data/eval_results/
+*.db
+*.sqlite
+*.sqlite3
+
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+*.log

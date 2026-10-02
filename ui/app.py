@@ -5,6 +5,7 @@ Run:
 python -m streamlit run ui/app.py
 """
 
+import os
 import uuid
 import requests
 import streamlit as st
@@ -13,8 +14,12 @@ import streamlit as st
 # CONFIG
 # ============================================================
 
-API_URL = "http://127.0.0.1:8000/chat"
-RESET_BASE_URL = "http://127.0.0.1:8000/session"
+# Backend base URL is configurable via env var so this works both
+# locally (127.0.0.1) and in Docker (e.g. http://smarthelpdesk:8000)
+# without editing code. Falls back to localhost for local dev.
+API_BASE_URL = os.getenv("API_URL", "http://127.0.0.1:8000")
+API_URL = f"{API_BASE_URL}/chat"
+RESET_BASE_URL = f"{API_BASE_URL}/session"
 
 st.set_page_config(
     page_title="SmartHelpDesk Copilot",
@@ -212,7 +217,7 @@ with st.sidebar:
         if st.button("🎫 Create Ticket", use_container_width=True):
             trigger_prompt("I need to create a support ticket.")
 
- 
+
 
 # ============================================================
 # MAIN CHAT UI

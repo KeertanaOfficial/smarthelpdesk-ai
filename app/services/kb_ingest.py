@@ -62,6 +62,65 @@ def ingest_collection(docs, collection_name):
     print(f"   ✅ {collection_name}: {total} docs ingested")
 
 
+# ============================================================
+# ✅ SELF-HEALING STARTUP CHECK
+# ============================================================
+# Whether a given container/image happens to already have an
+# ingested data/chroma or not (baked into the image, copied in,
+# a fresh build, a stale volume, etc.) should not matter. On
+# startup we check whether hr_docs/it_docs actually have data,
+# and auto-ingest only if they don't. Safe to call every startup —
+# costs nothing (no embedding calls) once the KB is populated.
+# ============================================================
+
+def is_collection_populated(collection_name: str) -> bool:
+    """Check whether a Chroma collection already has documents."""
+    try:
+        embeddings = OpenAIEmbeddings(
+            api_key=settings.openai_api_key,
+            model="text-embedding-3-small",
+        )
+        vs = Chroma(
+            collection_name=collection_name,
+            embedding_function=embeddings,
+            persist_directory=settings.chroma_persist_dir,
+        )
+        return vs._collection.count() > 0
+    except Exception as e:
+        print(f"[kb_ingest] Could not check collection '{collection_name}': {e}")
+        return False
+
+
+def ensure_kb_ingested():
+    """
+    Idempotent startup check. If hr_docs and/or it_docs are empty
+    (fresh container, image without baked-in KB, wiped volume,
+    etc.), ingest automatically so the app is never silently
+    missing its knowledge base. Does nothing if data is already
+    present.
+    """
+    needs_hr = not is_collection_populated("hr_docs")
+    needs_it = not is_collection_populated("it_docs")
+
+    if not needs_hr and not needs_it:
+        print("[kb_ingest] ✅ KB already populated — skipping auto-ingest.")
+        return
+
+    print("[kb_ingest] ⚠️  KB missing or incomplete — running ingestion automatically...")
+    kb = build_full_kb()
+    save_processed(kb)
+
+    if needs_hr:
+        print("[kb_ingest] 📘 Ingesting HR collection...")
+        ingest_collection(build_documents(kb["hr"]), "hr_docs")
+
+    if needs_it:
+        print("[kb_ingest] 💻 Ingesting IT collection...")
+        ingest_collection(build_documents(kb["it"]), "it_docs")
+
+    print("[kb_ingest] ✅ Auto-ingest complete.")
+
+
 def main():
     print("=" * 60)
     print("🚀 SmartHelpDesk AI — Production Ingestion Pipeline")
