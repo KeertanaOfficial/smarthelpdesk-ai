@@ -253,18 +253,6 @@ def trigger_prompt(prompt_text: str):
 
 with st.sidebar:
     st.caption(f"Signed in as **{st.session_state.auth_username}**")
-    if st.button("Log out", use_container_width=True):
-        st.session_state.access_token = None
-        st.session_state.auth_username = None
-        st.session_state.messages = []
-        st.rerun()
-
-    st.divider()
-
-    st.subheader("Start a new conversation:")
-    if st.button("New Conversation", use_container_width=True):
-        reset_conversation()
-        st.rerun()
 
     st.divider()
 
@@ -308,7 +296,21 @@ with st.sidebar:
 # MAIN CHAT UI
 # ============================================================
 
-st.title("💬 SmartHelpDesk Copilot")
+header_title_col, header_newconv_col, header_logout_col = st.columns([6, 1.4, 1.4])
+with header_title_col:
+    st.title("💬 SmartHelpDesk Copilot")
+with header_newconv_col:
+    st.write("")
+    if st.button("New Conversation", use_container_width=True):
+        reset_conversation()
+        st.rerun()
+with header_logout_col:
+    st.write("")
+    if st.button("Log out", use_container_width=True):
+        st.session_state.access_token = None
+        st.session_state.auth_username = None
+        st.session_state.messages = []
+        st.rerun()
 st.caption(
     "Ask questions about HR policies, IT support, password resets, VPN issues, or ticket status."
 )
