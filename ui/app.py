@@ -319,6 +319,27 @@ st.caption(
     "Ask questions about HR policies, IT support, password resets, VPN issues, or ticket status."
 )
 
+if not st.session_state.messages:
+    st.markdown("#### \U0001F44B Welcome! Here's what I can help with:")
+    st.caption("Pick a topic for a sample question, or just type your own below.")
+
+    topic_cols = st.columns(4)
+    for i, (category, questions) in enumerate(SUGGESTIONS.items()):
+        with topic_cols[i % 4]:
+            if st.button(category, key=f"welcome_{category}", use_container_width=True):
+                trigger_prompt(questions[0])
+
+    wcol1, wcol2 = st.columns(2)
+    with wcol1:
+        if st.button("\U0001F511 Reset Password", key="welcome_reset_pw", use_container_width=True):
+            trigger_prompt("How do I reset my password?")
+    with wcol2:
+        if st.button("\U0001F3AB Create or check a ticket", key="welcome_ticket", use_container_width=True):
+            trigger_prompt("I need to create a support ticket.")
+
+    st.caption("More topics and quick actions are in the sidebar too.")
+    st.divider()
+
 render_messages()
 
 # ============================================================
