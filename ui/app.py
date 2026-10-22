@@ -96,57 +96,61 @@ def _auth_headers():
 
 if not st.session_state.access_token:
     st.title("\U0001F510 SmartHelpDesk Copilot")
-    st.caption("Sign in to continue.")
+    st.caption("Sign in or create an account to continue.")
 
-    login_tab, register_tab = st.tabs(["Log in", "Create account"])
+    _, center_col, _ = st.columns([1, 2.4, 1])
+    with center_col:
+        login_col, register_col = st.columns(2, gap="large")
 
-    with login_tab:
-        with st.form("login_form"):
-            login_username = st.text_input("Username", key="login_username")
-            login_password = st.text_input("Password", type="password", key="login_password")
-            submitted = st.form_submit_button("Log in", use_container_width=True)
+        with login_col:
+            st.subheader("Log in")
+            with st.form("login_form"):
+                login_username = st.text_input("Username", key="login_username")
+                login_password = st.text_input("Password", type="password", key="login_password")
+                submitted = st.form_submit_button("Log in", use_container_width=True)
 
-        if submitted:
-            try:
-                resp = requests.post(
-                    LOGIN_URL,
-                    json={"username": login_username, "password": login_password},
-                    timeout=30,
-                )
-                if resp.status_code == 200:
-                    data = resp.json()
-                    st.session_state.access_token = data["access_token"]
-                    st.session_state.auth_username = data["username"]
-                    st.rerun()
-                else:
-                    detail = resp.json().get("detail", "Login failed")
-                    st.error(detail)
-            except Exception as e:
-                st.error(f"Could not reach the server: {e}")
+            if submitted:
+                try:
+                    resp = requests.post(
+                        LOGIN_URL,
+                        json={"username": login_username, "password": login_password},
+                        timeout=30,
+                    )
+                    if resp.status_code == 200:
+                        data = resp.json()
+                        st.session_state.access_token = data["access_token"]
+                        st.session_state.auth_username = data["username"]
+                        st.rerun()
+                    else:
+                        detail = resp.json().get("detail", "Login failed")
+                        st.error(detail)
+                except Exception as e:
+                    st.error(f"Could not reach the server: {e}")
 
-    with register_tab:
-        with st.form("register_form"):
-            reg_username = st.text_input("Choose a username", key="reg_username")
-            reg_password = st.text_input("Choose a password", type="password", key="reg_password")
-            reg_submitted = st.form_submit_button("Create account", use_container_width=True)
+        with register_col:
+            st.subheader("Create account")
+            with st.form("register_form"):
+                reg_username = st.text_input("Choose a username", key="reg_username")
+                reg_password = st.text_input("Choose a password", type="password", key="reg_password")
+                reg_submitted = st.form_submit_button("Create account", use_container_width=True)
 
-        if reg_submitted:
-            try:
-                resp = requests.post(
-                    REGISTER_URL,
-                    json={"username": reg_username, "password": reg_password},
-                    timeout=30,
-                )
-                if resp.status_code == 200:
-                    data = resp.json()
-                    st.session_state.access_token = data["access_token"]
-                    st.session_state.auth_username = data["username"]
-                    st.rerun()
-                else:
-                    detail = resp.json().get("detail", "Registration failed")
-                    st.error(detail)
-            except Exception as e:
-                st.error(f"Could not reach the server: {e}")
+            if reg_submitted:
+                try:
+                    resp = requests.post(
+                        REGISTER_URL,
+                        json={"username": reg_username, "password": reg_password},
+                        timeout=30,
+                    )
+                    if resp.status_code == 200:
+                        data = resp.json()
+                        st.session_state.access_token = data["access_token"]
+                        st.session_state.auth_username = data["username"]
+                        st.rerun()
+                    else:
+                        detail = resp.json().get("detail", "Registration failed")
+                        st.error(detail)
+                except Exception as e:
+                    st.error(f"Could not reach the server: {e}")
 
     st.stop()
 
