@@ -2,7 +2,7 @@ ROUTER_PROMPT = """You are a routing agent for an employee helpdesk AI.
 
 Classify the user's message into:
 
-1. intent: one of [kb_query, create_ticket, check_status, unknown]
+1. intent: one of [kb_query, create_ticket, check_status, capabilities, unknown]
 - create_ticket: User wants to raise/open/create/file/log a ticket, or report a
   problem they want tracked
   Examples: "create a ticket", "I want to report an issue", "log this issue",
@@ -11,9 +11,18 @@ Classify the user's message into:
 - check_status: Asking about EXISTING ticket status or updates
   Examples: "what's the status of my ticket", "any update on my issue",
             "check my tickets", "did IT resolve my issue"
-- kb_query: Asking for information, policy, how-to, or troubleshooting
+- capabilities: User is asking what THIS ASSISTANT can do, what topics it covers,
+  or how to use it (a question about the tool itself, not an HR/IT topic)
+  Examples: "what can you help me with", "what can I ask you", "what else can I ask here",
+            "what topics do you cover", "what do you do", "how do I use this", "help"
+- kb_query: Asking for HR/IT information, policy, how-to, or troubleshooting
   Examples: "how do I", "what is", "tell me about", "explain", "where can I find"
 - unknown: greetings, smalltalk, or anything unclear
+
+NOTE ON capabilities vs kb_query: "what can you help me with" or "what topics can
+I ask about" is capabilities (about the assistant), NOT kb_query, even though it
+starts with "what". Only classify as kb_query when the question is actually about
+an HR or IT topic.
 
 2. domain: one of [hr, it, unknown]
 

@@ -300,9 +300,13 @@ with st.sidebar:
 # MAIN CHAT UI
 # ============================================================
 
-header_title_col, header_newconv_col, header_logout_col = st.columns([6, 1.4, 1.4])
+header_title_col, header_whatcan_col, header_newconv_col, header_logout_col = st.columns([4.6, 1.8, 1.4, 1.4])
 with header_title_col:
     st.title("💬 SmartHelpDesk Copilot")
+with header_whatcan_col:
+    st.write("")
+    if st.button("❓ What can I ask?", use_container_width=True):
+        trigger_prompt("What can you help me with?")
 with header_newconv_col:
     st.write("")
     if st.button("New Conversation", use_container_width=True):
@@ -318,27 +322,11 @@ with header_logout_col:
 st.caption(
     "Ask questions about HR policies, IT support, password resets, VPN issues, or ticket status."
 )
-
-if not st.session_state.messages:
-    st.markdown("#### \U0001F44B Welcome! Here's what I can help with:")
-    st.caption("Pick a topic for a sample question, or just type your own below.")
-
-    topic_cols = st.columns(4)
-    for i, (category, questions) in enumerate(SUGGESTIONS.items()):
-        with topic_cols[i % 4]:
-            if st.button(category, key=f"welcome_{category}", use_container_width=True):
-                trigger_prompt(questions[0])
-
-    wcol1, wcol2 = st.columns(2)
-    with wcol1:
-        if st.button("\U0001F511 Reset Password", key="welcome_reset_pw", use_container_width=True):
-            trigger_prompt("How do I reset my password?")
-    with wcol2:
-        if st.button("\U0001F3AB Create or check a ticket", key="welcome_ticket", use_container_width=True):
-            trigger_prompt("I need to create a support ticket.")
-
-    st.caption("More topics and quick actions are in the sidebar too.")
-    st.divider()
+st.caption(
+    "I can also open a support ticket when something needs a human to follow up, and check the "
+    "status of a ticket you've already filed. Not sure where to start? Tap \u201cWhat can I ask?\u201d above, "
+    "or browse topics and quick actions in the sidebar."
+)
 
 render_messages()
 

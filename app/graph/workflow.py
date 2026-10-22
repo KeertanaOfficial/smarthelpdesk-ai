@@ -154,6 +154,32 @@ def human_confirmation(state: AgentState) -> AgentState:
 
 
 # ============================================================
+# Capabilities (meta-questions about what this assistant can do)
+# ============================================================
+def capabilities_agent(state: AgentState) -> AgentState:
+    """
+    Answers "what can you help me with?" / "what can I ask here?" style
+    questions directly, instead of letting them fall through to the
+    generic fallback_agent message below. Not a RAG answer, so it skips
+    retrieval and groundedness entirely (see output_guard's is_rag_answer
+    check, which only applies when intent == "kb_query").
+    """
+    state.answer = (
+        "Here's what I can help with:\n\n"
+        "**HR** \u2014 leave and vacation, payroll and salary, tax declarations and payslips, "
+        "expense reimbursement, benefits (health insurance, 401(k)), onboarding (first day, "
+        "laptop, badge access), and performance reviews.\n\n"
+        "**IT support** \u2014 password resets, MFA setup, VPN and Wi-Fi access, software requests, "
+        "hardware issues, and other account or access problems.\n\n"
+        "**Tickets** \u2014 I can open a support ticket for you if something needs a human to follow "
+        "up, and I can check the status of a ticket you've already filed.\n\n"
+        "Just ask in plain language, for example \"how do I reset my password\" or \"what's the status "
+        "of my ticket\", and I'll take it from there."
+    )
+    return state
+
+
+# ============================================================
 # Fallback (anything the router could not confidently classify)
 # ============================================================
 def fallback_agent(state: AgentState) -> AgentState:
@@ -189,6 +215,8 @@ def route_after_router(state: AgentState):
         return "ticket_status"
     if state.intent == "create_ticket":
         return "ticket_create"
+    if state.intent == "capabilities":
+        return "capabilities"
     if state.intent == "kb_query" and state.domain == "hr":
         return "hr_agent"
     if state.intent == "kb_query" and state.domain == "it":
@@ -242,6 +270,7 @@ def build_graph(use_checkpointer: bool = False):
     graph.add_node("ticket_status", ticket_status_agent)
     graph.add_node("human_confirmation", human_confirmation)
     graph.add_node("output_guard", output_guard)
+    graph.add_node("capabilities", capabilities_agent)
     graph.add_node("fallback", fallback_agent)
 
     graph.set_entry_point("input_guard")
@@ -258,6 +287,7 @@ def build_graph(use_checkpointer: bool = False):
         "ticket_create": "ticket_create",
         "ticket_status": "ticket_status",
         "output_guard": "output_guard",
+        "capabilities": "capabilities",
         "fallback": "fallback",
     })
 
@@ -283,6 +313,7 @@ def build_graph(use_checkpointer: bool = False):
     })
 
     graph.add_edge("ticket_status", "output_guard")
+    graph.add_edge("capabilities", "output_guard")
     graph.add_edge("fallback", "output_guard")
     graph.add_edge("output_guard", END)
     return graph.compile()
